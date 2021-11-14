@@ -32,14 +32,15 @@
 }
 
 .home-logo {
-  margin: 20px;
+  margin-bottom: 20px;
+  max-width: 300px;
 }
 
-.container {
+.app-container {
   /* margin-top: 60px; */
-  padding-top: 25px;
+  padding-top: 20px;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 1000px;
 }
 
 .header-text {

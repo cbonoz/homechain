@@ -194,9 +194,9 @@ export const NETWORK = chainId => {
 };
 export const ALCHEMY_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 
-export const TARGET_NETWORK = NETWORKS.ropsten;
+export const TARGET_NETWORK = NETWORKS.kovan;
 export const STORAGE_KEY = process.env.REACT_APP_NFT_KEY;
 export const APP_NAME = "HomeChain";
-export const APP_DESC = "Represent ownership of your home as NFT's";
+export const APP_DESC = "Issue collectible NFTs against your real estate property.";
 
 console.log("target_network", TARGET_NETWORK, STORAGE_KEY.substr(0, 4));

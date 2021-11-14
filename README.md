@@ -22,6 +22,7 @@ Demo flow:
 * Stat/web news about home/housing market
 * Create form flow having person upload proof of ownership of home
 * Create terms to allow others to deposit to it
+* Use react signature canvas to collect the user signature (checking against the deed) and uploading as an image file to the IPFS folder for the property.
 * Generate NFT after form completion
 * API call from chainlink to get house price estimate.
 * Login (powered by moralis).
@@ -37,12 +38,10 @@ Future work
 
 ### Useful links
 * https://chainlink-fall-hackathon-2021.devpost.com/ --
-* https://ethglobal.notion.site/Prizes-Page-Web3-Jam-9a69d72a9ce44a59bc3677c9db7c8c71
+* https://showcase.ethglobal.com/web3jam/prizes
 -->
 
 ### Dev Notes
-
-
 
 # 🏄‍♂️ Quick Start
 

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import { Steps, Divider, Button } from "antd";
 
@@ -21,11 +20,11 @@ function Home({ login }) {
           // description="Connect your Ethereum-enabled wallet to use Uniramp."
         />
         <Step
-          title="Find, share, and create liquidity pools."
+          title="Find, share, and create NFT's around your owned real estate."
           // description="Uniramp helps you discover the most advantageous liquidity pools."
         />
         <Step
-          title="Learn and earn rewards."
+          title="Fundraise or create limited collectibles."
           // description="Uniramp has a suite of free information to onboard you to core Uniswap concepts."
         />
       </Steps>
@@ -38,7 +37,5 @@ function Home({ login }) {
     </div>
   );
 }
-
-Home.propTypes = {};
 
 export default Home;
