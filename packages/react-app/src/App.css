@@ -1,0 +1,64 @@
+.App {
+  text-align: center;
+}
+
+.ant-layout,
+.ant-layout-sider,
+.ant-layout-header {
+  background: white !important;
+}
+
+.home-button-section {
+  margin: 50px;
+}
+
+.ant-input,
+.ant-input-affix-wrapper {
+  max-width: 400px;
+}
+
+.ant-collapse-content-box p {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.risk-page {
+  padding: 20px;
+}
+
+.logo-section {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.home-logo {
+  margin: 20px;
+}
+
+.container {
+  /* margin-top: 60px; */
+  padding-top: 25px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.header-text {
+  font-weight: bold;
+}
+
+.first-token {
+  margin-bottom: 20px;
+}
+
+.float-right {
+  float: right;
+}
+
+.trade-heading {
+  font-size: 16px;
+  font-weight: 500;
+  clear: both;
+}
+.header-image {
+  height: 30px;
+}
