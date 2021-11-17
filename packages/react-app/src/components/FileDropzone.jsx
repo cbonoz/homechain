@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { bytesToSize } from "./Discover/util";
+import { bytesToSize } from "../util";
 
 const thumbsContainer = {
   display: "flex",
@@ -35,7 +35,7 @@ const img = {
   height: "100%",
 };
 
-export function StreamDropzone({ files, setFiles }) {
+export function FileDropzone({ files, setFiles }) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: acceptedFiles => {
       console.log("files", acceptedFiles);

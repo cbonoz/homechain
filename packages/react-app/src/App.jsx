@@ -445,7 +445,7 @@ function App(props) {
   }
 
   const loggedIn = !!web3Modal.cachedProvider;
-  const ROUTES = loggedIn ? ["search", "list property", "about"] : ["setup"];
+  const ROUTES = loggedIn ? ["search", "list-property", "about"] : ["setup"];
 
   useMemo(() => {
     const href = window.location.pathname;
@@ -491,7 +491,13 @@ function App(props) {
               <Discover />
             </Route>
             <Route path={["/list-property"]}>
-              <ListProperty />
+              <ListProperty
+                isLoggedIn={loggedIn}
+                signer={userProviderAndSigner}
+                provider={userProviderAndSigner}
+                address={address}
+                blockExplorer={blockExplorer}
+              />
             </Route>
             <Route path="/about">
               <About />

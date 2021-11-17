@@ -1,10 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
+import { DEMO_PROPERTIES } from "../util";
+import PropertyCard from "./PropertyCard";
 
-function Discover(props) {
-  return <div></div>;
+function Discover({}) {
+  const [properties, setProperties] = useState();
+
+  useEffect(() => {
+    setProperties(DEMO_PROPERTIES);
+  }, []);
+  return (
+    <div>
+      {properties?.map((p, i) => {
+        return (
+          <span key={i}>
+            <PropertyCard {...p} />
+          </span>
+        );
+      })}
+    </div>
+  );
 }
-
-Discover.propTypes = {};
 
 export default Discover;
