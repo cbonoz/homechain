@@ -1,5 +1,5 @@
 <p align='center'>
-    <img src="./img/logo.png"/>
+    <img src="./img/logo.png" width=400/>
 </p>
 
 ## HomeChain
@@ -11,8 +11,6 @@ Represent ownership of your home by a NFT on filecoin.
 ### Requirements
 
 HomeChain has the following environment requirements:
-
-
 
 <pre>
 NFT_PORT_KEY=XXX          # your nftport.xyz api key.
