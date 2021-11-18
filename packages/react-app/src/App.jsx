@@ -33,6 +33,7 @@ const history = createBrowserHistory();
 
 const { ethers } = require("ethers");
 import "./App.css";
+import PropertyDetails from "./components/PropertyDetails";
 /*
     Welcome to 🏗 scaffold-eth !
 
@@ -175,6 +176,8 @@ function App(props) {
 
   const [injectedProvider, setInjectedProvider] = useState();
   const [address, setAddress] = useState();
+
+  const [property, setProperty] = useState(); // TODO: make stateless (derive from url)
 
   const logoutOfWeb3Modal = async () => {
     await web3Modal.clearCachedProvider();
@@ -486,7 +489,10 @@ function App(props) {
               <Home login={loadWeb3Modal} loggedIn={loggedIn} />
             </Route>
             <Route path={["/search"]}>
-              <Discover />
+              <Discover history={history} setProperty={setProperty} />
+            </Route>
+            <Route path={"/property/:propertyId"}>
+              <PropertyDetails history={history} property={property} />
             </Route>
             <Route path={["/list-property"]}>
               <ListProperty

@@ -12,6 +12,8 @@ Represent ownership of your home by a NFT on filecoin.
 
 HomeChain has the following environment requirements:
 
+
+
 <pre>
 NFT_PORT_KEY=XXX          # your nftport.xyz api key.
 REACT_APP_STORAGE_KEY=XXX # your web3.storage api key.

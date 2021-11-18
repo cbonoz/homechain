@@ -6,6 +6,7 @@ import { Input, Button, Steps, Layout, Modal } from "antd";
 import { addCard, DEMO_PROPERTIES } from "../util";
 import { FileDropzone } from "./FileDropzone";
 import ReactSignatureCanvas from "react-signature-canvas";
+import IntegerStep from "./IntegerStep";
 const toGatewayURL = e => e; // TODO: replace with https url for ipfs directory
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -24,7 +25,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
   }, [isLoggedIn]);
 
   const [files, setFiles] = useState([]);
-  const [info, setInfo] = useState({ ...DEMO_PROPERTIES[0], eth: 0.01, imgUrl: "" });
+  const [info, setInfo] = useState({ ...DEMO_PROPERTIES[0], percent: 10, limit: 10, imgUrl: "" });
   const [result, setResult] = useState({});
   const [signatureCollected, setSignatureCollected] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -79,6 +80,8 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
       } finally {
         setLoading(false);
       }
+
+      setShowModal(false);
     }
 
     console.log("update step", newStep);
@@ -114,11 +117,14 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
               onChange={e => updateInfo({ description: e.target.value })}
             />
 
+            <p>Enter percent of property (up to 10) for sale</p>
+            <IntegerStep val={info.percent} onChange={percent => updateInfo({ percent })} k />
+
             <Input
-              addonBefore={"Price (eth)"}
-              placeholder="Enter eth price"
+              addonBefore={"Number purchase-able"}
+              placeholder="Enter max possible participants"
               value={info.eth}
-              onChange={e => updateInfo({ eth: e.target.value })}
+              onChange={e => updateInfo({ limit: e.target.value })}
             />
 
             <Input
@@ -214,6 +220,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
                 sigRef.current = ref;
               }}
             />
+            <p>Clicking 'Done' below will create and list the NFT for purchase.</p>
           </div>
           <Button onClick={() => sigRef.current.clear()}>Clear</Button>
         </Modal>
