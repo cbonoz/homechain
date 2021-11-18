@@ -24,7 +24,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
   }, [isLoggedIn]);
 
   const [files, setFiles] = useState([]);
-  const [info, setInfo] = useState({ ...DEMO_PROPERTIES[0], eth: 0.01 });
+  const [info, setInfo] = useState({ ...DEMO_PROPERTIES[0], eth: 0.01, imgUrl: "" });
   const [result, setResult] = useState({});
   const [signatureCollected, setSignatureCollected] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -55,7 +55,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
       }
 
       if (!signatureCollected) {
-        setShowModal(false);
+        setShowModal(true);
         return;
       }
 
@@ -170,7 +170,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
 
   return (
     <div className="content">
-      <h1>List new property in marketplace</h1>
+      <h1>Create your real estate NFT</h1>
       <Header>
         <Steps current={currentStep}>
           <Step title="Login" description="Authenticate." />
@@ -195,12 +195,26 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
         )}
 
         {/* https://github.com/agilgur5/react-signature-canvas */}
-        <Modal title="Sign to continue" visible={showModal} onOk={handleOk} onCancel={() => setShowModal(false)}>
-          <ReactSignatureCanvas
-            ref={ref => {
-              sigRef.current = ref;
-            }}
-          />
+        <Modal
+          title="Enter signature"
+          visible={showModal}
+          onOk={handleOk}
+          cancelText={"Cancel"}
+          onCancel={() => setShowModal(false)}
+        >
+          {/* <h3>Enter signature</h3> */}
+          <p>
+            By signing this you are asserting that the attached document is valid and that you are the authorized party
+            to create this transaction / non-fungible token.
+          </p>
+          <div className="sig-canvas">
+            <ReactSignatureCanvas
+              className="sig-canvas"
+              ref={ref => {
+                sigRef.current = ref;
+              }}
+            />
+          </div>
           <Button onClick={() => sigRef.current.clear()}>Clear</Button>
         </Modal>
       </Footer>

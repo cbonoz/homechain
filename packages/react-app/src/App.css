@@ -63,3 +63,79 @@
 .header-image {
   height: 30px;
 }
+
+.content {
+  margin: 0 auto;
+  max-width: 1000px;
+  margin-top: 20px;
+}
+.sell-area {
+  padding: 20px;
+  /* border-left: 1px solid lightgray;
+  border-right: 1px solid lightgray; */
+  min-height: 60vh;
+}
+
+.sig-canvas {
+  border: 1px dotted black;
+  margin: 20px;
+}
+
+.sell-header {
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
+
+.hero-logo {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.header-steps {
+  height: 300px;
+  padding-top: 100px;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.card-image,
+.ant-card {
+  width: 300px !important;
+}
+
+.ant-card {
+  display: inline-grid;
+}
+
+.dropzone {
+  border: 1px dotted lightgray;
+  padding-top: 20px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.ant-input {
+  max-width: 400px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.ant-input-group-wrapper {
+  margin: 10px;
+}
+
+.ant-layout-header {
+  background: white !important;
+}
+
+.ant-btn,
+.ant-btn-circle {
+  /* padding: 10px 20px 10px 20px !important; */
+  margin: 10px;
+}
+
+.nav-logo {
+  height: 25px;
+}

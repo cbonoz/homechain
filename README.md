@@ -6,12 +6,32 @@
 
 Represent ownership of your home by a NFT on filecoin.
 
+<p><b>Note this app is a prototype and would need additional work to be production ready.</b></p>
+
+### Requirements
+
+HomeChain has the following environment requirements:
+
+<pre>
+NFT_PORT_KEY=XXX          # your nftport.xyz api key.
+REACT_APP_STORAGE_KEY=XXX # your web3.storage api key.
+</pre>
+
 <!--
 Tap into the equity of your home using chainlink
 -->
 
 <!--
+
+https://www.forbes.com/sites/nataliakarayaneva/2021/04/08/nfts-work-for-digital-art-they-also-work-perfectly-for-real-estate/?sh=775f435e43f3
+
 Sponsors:
+Ceramic: Distributed mutable data storage for the marketplace metadata. Search support.
+IPFS / Filecoin: Store associated files, signature, and proof of ownership (ex: deed/title).
+NFTPort: NFT issuance for the issued real estate backed NFT (minting).
+Unlock protocol: NFT purchase / paywall. Once an NFT is uploaded, unlock protocol regulates access (via payments).
+
+---
 Chainlink
 Moralis
 Filecoin

@@ -15,15 +15,13 @@ import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
 import Fortmatic from "fortmatic";
 import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
-//import Torus from "@toruslabs/torus-embed"
 import WalletLink from "walletlink";
 import Web3Modal from "web3modal";
-import { Account, Contract, Faucet, GasGauge, Header, Ramp, ThemeSwitch } from "./components";
-import About from "./components/About";
+import { Account, Header, Ramp, ThemeSwitch } from "./components";
 import Discover from "./components/Discover";
 import Home from "./components/Home";
 import ListProperty from "./components/ListProperty";
-import { INFURA_ID, NETWORK, NETWORKS, ALCHEMY_KEY, TARGET_NETWORK } from "./constants";
+import { INFURA_ID, NETWORK, ALCHEMY_KEY, TARGET_NETWORK } from "./constants";
 import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
@@ -484,8 +482,8 @@ function App(props) {
 
         <Switch>
           <div className="app-container">
-            <Route exact path={["/", "/setup"]}>
-              <Home login={loadWeb3Modal} />
+            <Route exact path={["/", "/setup", "/about"]}>
+              <Home login={loadWeb3Modal} loggedIn={loggedIn} />
             </Route>
             <Route path={["/search"]}>
               <Discover />
@@ -499,14 +497,14 @@ function App(props) {
                 blockExplorer={blockExplorer}
               />
             </Route>
-            <Route path="/about">
+            {/* <Route path="/about">
               <About />
-            </Route>
+            </Route> */}
           </div>
         </Switch>
       </BrowserRouter>
 
-      <ThemeSwitch />
+      {/* <ThemeSwitch /> */}
 
       {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
       <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
