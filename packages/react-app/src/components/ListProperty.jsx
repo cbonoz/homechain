@@ -7,6 +7,8 @@ import { addCard, DEMO_PROPERTIES } from "../util";
 import { FileDropzone } from "./FileDropzone";
 import ReactSignatureCanvas from "react-signature-canvas";
 import IntegerStep from "./IntegerStep";
+import { makeListingFiles, storeFiles } from "../util/stor";
+import { createStream, initCeramic } from "../util/ceramic";
 const toGatewayURL = e => e; // TODO: replace with https url for ipfs directory
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -62,17 +64,29 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
 
       setLoading(true);
 
+      const sigData = sigRef.current.getTrimmedCanvas().toDataURL("image/png");
+      const uploadFiles = makeListingFiles(files, sigData);
+
       try {
-        const res = {}; // await createBucketWithFiles(info.title, files);
-        setResult(res);
+        await initCeramic(address);
+      } catch (e) {
+        console.error(e);
+      }
+
+      try {
+        const cid = await storeFiles(uploadFiles);
+        const d = { ...info, cid };
+        const res = await createStream(d);
+        d["stream"] = res;
+
+        setResult(d);
 
         const card = {
-          ...info,
+          ...d,
           createdAt: new Date(),
-          key: res.bucketKey,
         };
 
-        addCard(card);
+        addCard(card); // TODO: add persistence (ex: moralis).
       } catch (e) {
         console.error("error creating listing", e);
         alert(e.toString());

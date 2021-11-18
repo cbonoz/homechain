@@ -21,17 +21,46 @@ const steps = [
 
 function PropertyDetails({ history, match, property }) {
   const pid = match && match.propertyId;
+  const p = property || {};
+  const propTitle = p.title || "property";
+  const listingTitle = `Participate in NFT for ${propTitle}.`;
 
   const purchase = () => {
-    window.unlockProtocol && window.unlockProtocol.loadCheckoutModal({});
-  };
+    const unl = window.unlockProtocol;
+    if (!unl) {
+      alert("Unlock protocol not defined on window");
+      return;
+    }
 
-  const p = property || {};
+    // https://docs.unlock-protocol.com/developers/paywall/locking-page
+    const config = {
+      pessimistic: true,
+      locks: {
+        "0x250a0153DfB52B44c560524283A6629C1d347545": {
+          // TODO: use dynamic lock id
+          network: 4,
+          name: "Unlock",
+        },
+      },
+      icon: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.10UUFNA8oLdFdDpzt-Em_QHaHa%26pid%3DApi&f=1",
+      callToAction: {
+        default: listingTitle,
+      },
+      metadataInputs: [
+        {
+          name: "Name",
+          type: "text",
+          required: true,
+        },
+      ],
+    };
+    unl.loadCheckoutModal(config);
+  };
 
   return (
     <div>
       <br />
-      <h1>Purchase NFT for {p.title || "property"}.</h1>
+      <h1>{listingTitle}</h1>
       <br />
       <Row>
         <Col span={12}>
@@ -44,7 +73,7 @@ function PropertyDetails({ history, match, property }) {
         <Col span={12}>
           <p>{JSON.stringify(p)}</p>
 
-          <Button onClick={purchase}>Purchase NFT</Button>
+          <Button onClick={purchase}>Purchase</Button>
         </Col>
       </Row>
     </div>

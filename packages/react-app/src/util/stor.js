@@ -5,15 +5,15 @@ const token = STORAGE_KEY;
 const client = new Web3Storage({ token });
 
 // Prepare files for storage as a property NFT listing.
-export function makeListingFiles(files, signatureData) {
-  const files = [...files, new File([signatureData], "signature.png")];
+export function makeListingFiles(uploadFiles, signatureData) {
+  const files = [...uploadFiles, new File([signatureData], "signature.png")];
   return files;
 }
 
 export async function storeFiles(files) {
-  const cid = await client.put(files)
-  console.log('stored files with cid:', cid)
-  return cid
+  const cid = await client.put(files);
+  console.log("stored files with cid:", cid);
+  return cid;
 }
 
 // const client = new NFTStorage({ token: apiKey });
