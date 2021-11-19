@@ -453,7 +453,7 @@ function App(props) {
     console.log("href", href);
     if (loggedIn && (href === "/" || href === "/setup")) {
       history.push("/search");
-      window.location.reload();
+      // window.location.reload();
     } else if (!loggedIn && href !== "/setup") {
       history.push("/setup");
     }

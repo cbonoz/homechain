@@ -33,7 +33,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
     percent: 10,
     limit: 10,
     eth: 1.0,
-    collectibleOnly: false,
+    collectibleOnly: true,
     imgUrl: "",
   });
   const [result, setResult] = useState({});
@@ -44,6 +44,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
   const clearInfo = () => setInfo({});
 
   const updateInfo = update => {
+    console.log("update", update);
     setInfo({ ...info, ...update });
   };
 
@@ -139,32 +140,6 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
               onChange={e => updateInfo({ description: e.target.value })}
             />
 
-            <Checkbox checked={info.collectibleOnly} onChange={e => updateInfo({ collectibleOnly: e.target.checked })}>
-              Collectible only
-            </Checkbox>
-
-            {!info.collectibleOnly && (
-              <div>
-                <p>Enter percent of property (up to 10%) for sale: </p>
-                <IntegerStep val={info.percent} onChange={percent => updateInfo({ percent })} />
-
-                <Input
-                  addonBefore={"Number purchase-able"}
-                  placeholder="Enter max possible participants"
-                  value={info.limit}
-                  onChange={e => updateInfo({ limit: e.target.value })}
-                />
-
-                <Input
-                  addonBefore={"Enter price (Eth)"}
-                  placeholder="Enter eth price per participant"
-                  value={info.eth}
-                  suffix={"ETH"}
-                  onChange={e => updateInfo({ eth: e.target.value })}
-                />
-              </div>
-            )}
-
             <Input
               addonBefore={"Image"}
               addonAfter={"A default will be used if blank"}
@@ -174,6 +149,41 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
             />
 
             <Input addonBefore={"Address"} disabled placeholder="Payment Address: " value={address} />
+            <div className="percent-form">
+              <Checkbox
+                checked={info.collectibleOnly}
+                onChange={e => updateInfo({ collectibleOnly: e.target.checked })}
+              >
+                Collectible only
+              </Checkbox>
+
+              {!info.collectibleOnly && (
+                <div>
+                  <br />
+                  <p className="float-left clear">
+                    Enter percent of property (up to 10%) for sale: <br />
+                    <br />
+                    <IntegerStep val={info.percent} onChange={percent => updateInfo({ percent })} />
+                  </p>
+
+                  <Input
+                    addonBefore={"Number purchase-able"}
+                    placeholder="Enter max possible participants"
+                    value={info.limit}
+                    type="number"
+                    onChange={e => updateInfo({ limit: e.target.value })}
+                  />
+
+                  <Input
+                    addonBefore={"Enter price (Eth)"}
+                    placeholder="Enter eth price per participant"
+                    value={info.eth}
+                    suffix={"ETH"}
+                    onChange={e => updateInfo({ eth: e.target.value })}
+                  />
+                </div>
+              )}
+            </div>
           </div>
         );
       case 2: // upload
@@ -254,7 +264,6 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
           </p>
           <div className="sig-canvas">
             <ReactSignatureCanvas
-              className="sig-canvas"
               ref={ref => {
                 sigRef.current = ref;
               }}

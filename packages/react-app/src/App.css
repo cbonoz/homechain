@@ -12,9 +12,21 @@
   margin: 50px;
 }
 
+.float-left {
+  float: left;
+}
+
+.clear {
+  clear: both;
+}
+
 .ant-input,
 .ant-input-affix-wrapper {
   max-width: 400px;
+}
+.percent-form {
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .ant-collapse-content-box p {
@@ -78,7 +90,7 @@
 
 .sig-canvas {
   border: 1px dotted black;
-  margin: 20px;
+  /* margin: 20px; */
 }
 
 .sell-header {
