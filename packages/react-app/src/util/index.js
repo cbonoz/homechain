@@ -11,6 +11,9 @@ export function bytesToSize(bytes) {
   return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
 }
 
+export const createFullAddress = () =>
+  `${faker.address.streetAddress()}, ${faker.address.city()} ${faker.address.stateAbbr()}`;
+
 const createProperty = () => ({
   id: faker.datatype.number(),
   title: faker.address.streetAddress(),

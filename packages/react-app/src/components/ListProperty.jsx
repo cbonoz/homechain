@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Input, Button, Steps, Layout, Modal, Checkbox } from "antd";
 // import { createBucketWithFiles } from "../../util/bucket";
 // import { toGatewayURL } from "nft.storage";
-import { addCard, DEMO_PROPERTIES } from "../util";
+import { addCard, createFullAddress, DEMO_PROPERTIES } from "../util";
 import { FileDropzone } from "./FileDropzone";
 import ReactSignatureCanvas from "react-signature-canvas";
 import IntegerStep from "./IntegerStep";
@@ -18,18 +18,25 @@ const { Step } = Steps;
 
 const LAST_STEP = 3;
 
+const testAddress = createFullAddress();
+
 function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) {
   const [currentStep, setCurrentStep] = useState(0);
   const sigRef = useRef();
 
   useEffect(() => {
     console.log("isLoggedIn", isLoggedIn);
-    if (isLoggedIn && currentStep === 0) updateStep(1);
+    if (isLoggedIn && currentStep === 0) {
+      updateStep(1);
+    } else if (!isLoggedIn && currentStep !== 0) {
+      setCurrentStep(0);
+    }
   }, [isLoggedIn]);
 
   const [files, setFiles] = useState([]);
   const [info, setInfo] = useState({
-    ...DEMO_PROPERTIES[0],
+    title: testAddress.split(",")[0],
+    description: `${testAddress}. Own 1% of this property`,
     percent: 10,
     limit: 10,
     eth: 1.0,
@@ -86,12 +93,12 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
         const cid = await storeFiles(uploadFiles);
         const d = { ...info, cid, imgUrl: info.imgUrl || DEFAULT_HOME_ICON };
         const res = await createStream(d);
-        d["stream"] = res;
 
         setResult(d);
 
         const card = {
           ...d,
+          stream: res,
           createdAt: new Date(),
         };
 
@@ -230,15 +237,15 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
         <Steps current={currentStep}>
           <Step title="Login" description="Authenticate." />
           <Step title="Information" description="What are you listing?" />
-          <Step title="Verify" description="Add proof of ownership." />
-          <Step title="Done" description="View listing." />
+          <Step title="Verify" description="Add proof of ownership or deed." />
+          <Step title="Done" description="Listing is live." />
         </Steps>
       </Header>
       <Content>
         <div className="sell-area">{getBody()}</div>
       </Content>
       <Footer>
-        {(currentStep !== 0 || (currentStep !== 1 && !isLoggedIn)) && (
+        {currentStep > 0 && currentStep !== LAST_STEP && !isLoggedIn && (
           <Button disabled={loading} type="primary" onClick={() => updateStep(-1)}>
             Previous
           </Button>
@@ -270,7 +277,9 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
             />
             <p>Clicking 'Done' below will create and list the NFT for purchase.</p>
           </div>
-          <Button onClick={() => sigRef.current.clear()}>Clear</Button>
+          <Button loading={loading} onClick={() => sigRef.current.clear()}>
+            Clear
+          </Button>
         </Modal>
       </Footer>
     </div>
