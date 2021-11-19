@@ -66,6 +66,9 @@
       "**/hardhat-ts/**"
     ]
   },
+    "resolutions": {
+    "did-jwt": "5.1.0"
+  },
   "dependencies": {},
   "devDependencies": {
     "husky": "^7.0.2"

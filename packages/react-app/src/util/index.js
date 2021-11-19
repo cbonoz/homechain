@@ -1,3 +1,5 @@
+import faker from "faker";
+
 export const capitalize = s => {
   if (typeof s !== "string") return "";
   return (s.charAt(0).toUpperCase() + s.slice(1)).replace("-", " ");
@@ -9,11 +11,12 @@ export function bytesToSize(bytes) {
   return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
 }
 
-export const DEMO_PROPERTIES = [
-  {
-    title: "Test property",
-    description: "444 Test address dr.",
-  },
-];
+const createProperty = () => ({
+  id: faker.datatype.number(),
+  title: faker.address.streetAddress(),
+  description: "Own 1% of this property.",
+});
+
+export const DEMO_PROPERTIES = [createProperty(), createProperty(), createProperty()];
 
 export const addCard = p => DEMO_PROPERTIES.push(p);

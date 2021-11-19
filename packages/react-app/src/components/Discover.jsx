@@ -8,7 +8,7 @@ function Discover({ setProperty, history }) {
   useEffect(() => {
     setProperties(DEMO_PROPERTIES);
   }, []);
-  
+
   return (
     <div>
       {properties?.map((p, i) => {
@@ -18,6 +18,7 @@ function Discover({ setProperty, history }) {
             onClick={() => {
               setProperty(p);
               history.push(`/property/${p.id}`);
+              // window.location.reload();
             }}
           >
             <PropertyCard {...p} />

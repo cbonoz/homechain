@@ -1,6 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Row, Col, Steps, Button } from "antd";
+import { Row, Col, Steps, Button, Image } from "antd";
+import { DEFAULT_HOME_ICON } from "../constants";
+import { capitalize } from "../util";
 
 const { Step } = Steps;
 
@@ -23,7 +24,7 @@ function PropertyDetails({ history, match, property }) {
   const pid = match && match.propertyId;
   const p = property || {};
   const propTitle = p.title || "property";
-  const listingTitle = `Participate in NFT for ${propTitle}.`;
+  const listingTitle = `participate in NFT for ${propTitle}`;
 
   const purchase = () => {
     const unl = window.unlockProtocol;
@@ -36,19 +37,19 @@ function PropertyDetails({ history, match, property }) {
     const config = {
       pessimistic: true,
       locks: {
-        "0x250a0153DfB52B44c560524283A6629C1d347545": {
+        "0xA5c657Ce8f1f77283344985Ac00a5303f86b45e7": {
           // TODO: use dynamic lock id
-          network: 4,
+          network: 4, // rinkeby
           name: "Unlock",
         },
       },
-      icon: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.10UUFNA8oLdFdDpzt-Em_QHaHa%26pid%3DApi&f=1",
+      icon: DEFAULT_HOME_ICON,
       callToAction: {
-        default: listingTitle,
+        default: `To ${listingTitle}, complete payment by unlocking access below.`,
       },
       metadataInputs: [
         {
-          name: "Name",
+          name: "Your name",
           type: "text",
           required: true,
         },
@@ -60,10 +61,11 @@ function PropertyDetails({ history, match, property }) {
   return (
     <div>
       <br />
-      <h1>{listingTitle}</h1>
+      <h1>{capitalize(listingTitle)}</h1>
       <br />
       <Row>
         <Col span={12}>
+          <h3>Instructions</h3>
           <Steps direction="vertical" current={1}>
             {steps.map(item => (
               <Step key={item.title} title={item.title} />
@@ -71,7 +73,16 @@ function PropertyDetails({ history, match, property }) {
           </Steps>
         </Col>
         <Col span={12}>
-          <p>{JSON.stringify(p)}</p>
+          <h3>Property Details</h3>
+          {/* <p>{JSON.stringify(p)}</p> */}
+          {p.imgUrl && <Image src={p.imgUrl} width="300" />}
+          {Object.keys(p).map((k, i) => {
+            return (
+              <li key={i}>
+                {capitalize(k)}: {JSON.stringify(p[k]).replaceAll('"', "")}
+              </li>
+            );
+          })}
 
           <Button onClick={purchase}>Purchase</Button>
         </Col>

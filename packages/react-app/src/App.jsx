@@ -488,9 +488,7 @@ function App(props) {
             <Route exact path={["/", "/setup", "/about"]}>
               <Home login={loadWeb3Modal} loggedIn={loggedIn} />
             </Route>
-            <Route path={["/search"]}>
-              <Discover history={history} setProperty={setProperty} />
-            </Route>
+            <Route path={["/search"]} render={props => <Discover {...props} setProperty={setProperty} />} />
             <Route path={"/property/:propertyId"}>
               <PropertyDetails history={history} property={property} />
             </Route>

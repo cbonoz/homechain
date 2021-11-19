@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { Input, Button, Steps, Layout, Modal } from "antd";
+import { Input, Button, Steps, Layout, Modal, Checkbox } from "antd";
 // import { createBucketWithFiles } from "../../util/bucket";
 // import { toGatewayURL } from "nft.storage";
 import { addCard, DEMO_PROPERTIES } from "../util";
@@ -9,6 +9,7 @@ import ReactSignatureCanvas from "react-signature-canvas";
 import IntegerStep from "./IntegerStep";
 import { makeListingFiles, storeFiles } from "../util/stor";
 import { createStream, initCeramic } from "../util/ceramic";
+import { DEFAULT_HOME_ICON } from "../constants";
 const toGatewayURL = e => e; // TODO: replace with https url for ipfs directory
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -27,7 +28,14 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
   }, [isLoggedIn]);
 
   const [files, setFiles] = useState([]);
-  const [info, setInfo] = useState({ ...DEMO_PROPERTIES[0], percent: 10, limit: 10, imgUrl: "" });
+  const [info, setInfo] = useState({
+    ...DEMO_PROPERTIES[0],
+    percent: 10,
+    limit: 10,
+    eth: 1.0,
+    collectibleOnly: false,
+    imgUrl: "",
+  });
   const [result, setResult] = useState({});
   const [signatureCollected, setSignatureCollected] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -75,7 +83,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
 
       try {
         const cid = await storeFiles(uploadFiles);
-        const d = { ...info, cid };
+        const d = { ...info, cid, imgUrl: info.imgUrl || DEFAULT_HOME_ICON };
         const res = await createStream(d);
         d["stream"] = res;
 
@@ -131,15 +139,31 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
               onChange={e => updateInfo({ description: e.target.value })}
             />
 
-            <p>Enter percent of property (up to 10) for sale</p>
-            <IntegerStep val={info.percent} onChange={percent => updateInfo({ percent })} k />
+            <Checkbox checked={info.collectibleOnly} onChange={e => updateInfo({ collectibleOnly: e.target.checked })}>
+              Collectible only
+            </Checkbox>
 
-            <Input
-              addonBefore={"Number purchase-able"}
-              placeholder="Enter max possible participants"
-              value={info.eth}
-              onChange={e => updateInfo({ limit: e.target.value })}
-            />
+            {!info.collectibleOnly && (
+              <div>
+                <p>Enter percent of property (up to 10%) for sale: </p>
+                <IntegerStep val={info.percent} onChange={percent => updateInfo({ percent })} />
+
+                <Input
+                  addonBefore={"Number purchase-able"}
+                  placeholder="Enter max possible participants"
+                  value={info.limit}
+                  onChange={e => updateInfo({ limit: e.target.value })}
+                />
+
+                <Input
+                  addonBefore={"Enter price (Eth)"}
+                  placeholder="Enter eth price per participant"
+                  value={info.eth}
+                  suffix={"ETH"}
+                  onChange={e => updateInfo({ eth: e.target.value })}
+                />
+              </div>
+            )}
 
             <Input
               addonBefore={"Image"}
@@ -148,6 +172,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
               value={info.imgUrl}
               onChange={e => updateInfo({ imgUrl: e.target.value })}
             />
+
             <Input addonBefore={"Address"} disabled placeholder="Payment Address: " value={address} />
           </div>
         );
@@ -162,9 +187,9 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
           <div className="complete-section">
             <h2 className="sell-header">Complete!</h2>
 
-            {Object.keys(result).map(k => {
+            {Object.keys(result).map((k, i) => {
               return (
-                <li>
+                <li key={i}>
                   {k}: {JSON.stringify(result[k]).replaceAll('"', "")}
                 </li>
               );

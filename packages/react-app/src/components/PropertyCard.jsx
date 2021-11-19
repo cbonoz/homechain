@@ -1,18 +1,19 @@
 import { Card, Avatar } from "antd";
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from "@ant-design/icons";
+import { DEFAULT_HOME_ICON } from "../constants";
 
 const { Meta } = Card;
 
 const PropertyCard = ({
   title,
   description,
-  imgUrl = "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+  imgUrl = DEFAULT_HOME_ICON,
   icon = "https://joeschmoe.io/api/v1/random",
 }) => {
   return (
     <Card
-      style={{ width: 300, cursor: "pointer" }}
-      cover={<img alt="example" src={imgUrl} />}
+      style={{ width: 200, cursor: "pointer", margin: 20 }}
+      cover={<img alt="example" src={imgUrl} style={{ width: 200, height: 200, margin: "0 auto" }} />}
       actions={
         [
           //   <SettingOutlined key="setting" />,

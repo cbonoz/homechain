@@ -1,4 +1,5 @@
-import { NFTStorage, File } from "nft.storage";
+// import { NFTStorage, File } from "nft.storage";
+import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
 import { STORAGE_KEY } from "../constants";
 
 const token = STORAGE_KEY;

@@ -18,7 +18,7 @@ REACT_APP_STORAGE_KEY=XXX # your web3.storage api key.
 </pre>
 
 <!--
-Tap into the equity of your home using chainlink
+Tap into the equity of your home.
 -->
 
 <!--
@@ -38,6 +38,7 @@ Filecoin
 
 Demo flow:
 * Stat/web news about home/housing market
+* NFT platforms for real estate exist, but a problem is governance.
 * Create form flow having person upload proof of ownership of home
 * Create terms to allow others to deposit to it
 * Use react signature canvas to collect the user signature (checking against the deed) and uploading as an image file to the IPFS folder for the property.
