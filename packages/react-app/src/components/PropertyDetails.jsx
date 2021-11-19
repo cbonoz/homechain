@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Steps, Button, Image } from "antd";
 import { DEFAULT_HOME_ICON } from "../constants";
-import { capitalize } from "../util";
+import { capitalize, DEMO_PROPERTIES } from "../util";
 
 const { Step } = Steps;
 
@@ -22,9 +22,9 @@ const steps = [
 
 function PropertyDetails({ history, match, property }) {
   const pid = match && match.propertyId;
-  const p = property || {};
+  const p = property || DEMO_PROPERTIES[0];
   const propTitle = p.title || "property";
-  const listingTitle = `participate in NFT for ${propTitle}`;
+  const listingTitle = `participate in NFT sale for ${propTitle}`;
 
   const purchase = () => {
     const unl = window.unlockProtocol;
@@ -64,7 +64,9 @@ function PropertyDetails({ history, match, property }) {
     <div>
       <Image src={imgUrl} width={100} />
       <br />
-      <h1>{capitalize(listingTitle)}</h1>
+      <h1>{capitalize(listingTitle)}.</h1>
+      {/* <hr /> */}
+      <br />
       <br />
       <Row>
         <Col span={12}>
