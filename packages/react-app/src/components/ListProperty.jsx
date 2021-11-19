@@ -10,6 +10,7 @@ import IntegerStep from "./IntegerStep";
 import { makeListingFiles, storeFiles } from "../util/stor";
 import { createStream, initCeramic } from "../util/ceramic";
 import { DEFAULT_HOME_ICON } from "../constants";
+import { createNftFromFileData } from "../util/nftport";
 const toGatewayURL = e => e; // TODO: replace with https url for ipfs directory
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -68,7 +69,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
   const updateStep = async offset => {
     const newStep = currentStep + offset;
     if (newStep === LAST_STEP) {
-      if (!files) {
+      if (!files || files.length === 0) {
         alert("At least one file must be added");
         return;
       }
@@ -90,8 +91,16 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
       }
 
       try {
+        const nftData = await createNftFromFileData(files[0]);
+
         const cid = await storeFiles(uploadFiles);
-        const d = { ...info, cid, imgUrl: info.imgUrl || DEFAULT_HOME_ICON };
+        const d = {
+          ...info,
+          nftTx: nftData.transaction_external_url,
+          nftContract: nftData.contract_address,
+          cid,
+          imgUrl: info.imgUrl || DEFAULT_HOME_ICON,
+        };
         const res = await createStream(d);
 
         setResult(d);
@@ -99,6 +108,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
         const card = {
           ...d,
           stream: res,
+          nft: nftData,
           createdAt: new Date(),
         };
 
@@ -258,6 +268,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
 
         {/* https://github.com/agilgur5/react-signature-canvas */}
         <Modal
+          confirmLoading={loading}
           title="Enter signature"
           visible={showModal}
           onOk={handleOk}
@@ -277,9 +288,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
             />
             <p>Clicking 'Done' below will create and list the NFT for purchase.</p>
           </div>
-          <Button loading={loading} onClick={() => sigRef.current.clear()}>
-            Clear
-          </Button>
+          <Button onClick={() => sigRef.current.clear()}>Clear</Button>
         </Modal>
       </Footer>
     </div>

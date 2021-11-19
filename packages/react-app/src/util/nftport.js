@@ -3,7 +3,7 @@ import axios from "axios";
 const NFT_PORT_KEY = process.env.NFT_PORT_KEY;
 console.log("NFT_PORT_KEY", NFT_PORT_KEY);
 
-export const createNftFromImageData = (data, chain) => {
+export const createNftFromFileData = (data, chain) => {
   var options = {
     method: "POST",
     url: "https://api.nftport.xyz/v0/mints/easy/files",
