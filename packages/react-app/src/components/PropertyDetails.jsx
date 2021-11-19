@@ -58,24 +58,26 @@ function PropertyDetails({ history, match, property }) {
     unl.loadCheckoutModal(config);
   };
 
+  const imgUrl = p.imgUrl || DEFAULT_HOME_ICON;
+
   return (
     <div>
+      <Image src={imgUrl} width={100} />
       <br />
       <h1>{capitalize(listingTitle)}</h1>
       <br />
       <Row>
         <Col span={12}>
           <h3>Instructions</h3>
-          <Steps direction="vertical" current={1}>
+          <Steps direction="vertical" current={0}>
             {steps.map(item => (
-              <Step key={item.title} title={item.title} />
+              <Step key={item.title} title={item.title} description={item.description} />
             ))}
           </Steps>
         </Col>
         <Col span={12}>
           <h3>Property Details</h3>
           {/* <p>{JSON.stringify(p)}</p> */}
-          {p.imgUrl && <Image src={p.imgUrl} width="300" />}
           {Object.keys(p).map((k, i) => {
             return (
               <li key={i}>
@@ -83,9 +85,10 @@ function PropertyDetails({ history, match, property }) {
               </li>
             );
           })}
-
-          <Button onClick={purchase}>Purchase</Button>
         </Col>
+        <Button type="primary" onClick={purchase}>
+          Purchase
+        </Button>
       </Row>
     </div>
   );
