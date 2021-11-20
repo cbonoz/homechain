@@ -17,8 +17,10 @@ export const ipfsUrl = cid => `https://ipfs.io/ipfs/${cid}`;
 export const createFullAddress = () =>
   `${faker.address.streetAddress()}, ${faker.address.city()} ${faker.address.stateAbbr()}`;
 
+const TEST_CID = "bafybeihzu3d2ekfoyyr4wlwyzg6nf4i6qm2qhmsfatenurwxs6bewjchue";
+
 const createProperty = () => ({
-  id: faker.datatype.number(),
+  id: TEST_CID || faker.datatype.number(),
   title: faker.address.streetAddress(),
   description: "Own 1% of this property.",
   imgUrl: DEFAULT_HOME_ICON,

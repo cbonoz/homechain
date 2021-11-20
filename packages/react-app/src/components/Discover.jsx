@@ -17,7 +17,7 @@ function Discover({ setProperty, history }) {
             key={i}
             onClick={() => {
               setProperty(p);
-              history.push(`/property/${p.id}`);
+              history.push(`/property/${p.id || p.cid}`);
               // window.location.reload();
             }}
           >

@@ -161,10 +161,13 @@ function App(props) {
 
   const [property, setProperty] = useState(); // TODO: make stateless (derive from url)
 
-  const logoutOfWeb3Modal = async () => {
+  const logoutOfWeb3Modal = async skipRefresh => {
     await web3Modal.clearCachedProvider();
     if (injectedProvider && injectedProvider.provider && typeof injectedProvider.provider.disconnect == "function") {
       await injectedProvider.provider.disconnect();
+    }
+    if (skipRefresh) {
+      return;
     }
     setTimeout(() => {
       window.location.reload();
@@ -441,6 +444,13 @@ function App(props) {
     }
   }, [loggedIn]);
 
+  useEffect(() => {
+    console.log("check", address);
+    if ((address || "").startsWith("0xe505")) {
+      logoutOfWeb3Modal(true);
+    }
+  }, [address]);
+
   return (
     <div className="App">
       {/* ✏️ Edit the header and change the title to your project name */}
@@ -471,9 +481,10 @@ function App(props) {
               <Home login={loadWeb3Modal} loggedIn={loggedIn} />
             </Route>
             <Route path={["/search"]} render={props => <Discover {...props} setProperty={setProperty} />} />
-            <Route path={"/property/:propertyId"}>
-              <PropertyDetails history={history} property={property} />
-            </Route>
+            <Route
+              path={"/property/:propertyId"}
+              render={props => <PropertyDetails {...props} property={property} setProperty={setProperty} />}
+            />
             <Route path={["/list-property"]}>
               <ListProperty
                 isLoggedIn={loggedIn}

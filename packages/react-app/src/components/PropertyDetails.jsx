@@ -24,7 +24,7 @@ const steps = [
 ];
 
 function PropertyDetails({ history, match, property }) {
-  const pid = match && match.propertyId;
+  const pid = match && match.params.propertyId;
   const [p, setP] = useState(property || DEMO_PROPERTIES[0]);
   const [loading, setLoading] = useState(false);
   // const [data, setData] = useState({})
@@ -32,6 +32,7 @@ function PropertyDetails({ history, match, property }) {
   const listingTitle = `participate in NFT sale for ${propTitle}`;
 
   const getProperty = async cid => {
+    console.log("getProperty", cid);
     if (!cid) {
       return;
     }
@@ -40,6 +41,7 @@ function PropertyDetails({ history, match, property }) {
     try {
       const res = await getStreamForProperty(cid);
       setP(res);
+      console.log();
     } catch (e) {
       console.error(e);
     } finally {
@@ -48,7 +50,9 @@ function PropertyDetails({ history, match, property }) {
   };
 
   useEffect(() => {
-    getProperty(pid);
+    if (p) {
+      getProperty(p.streamId || pid);
+    }
   }, [pid]);
 
   const purchase = () => {
@@ -94,24 +98,27 @@ function PropertyDetails({ history, match, property }) {
       <br />
       <br />
       <Row>
-        <Col span={12}>
-          <h3>Instructions</h3>
-          <Steps direction="vertical" current={0}>
-            {steps.map(item => (
-              <Step key={item.title} title={item.title} description={item.description} />
-            ))}
-          </Steps>
-        </Col>
-        <Col span={12}>
+        <Col span={8}>
+          <h2>Property Details</h2>
           <Image src={imgUrl} width={200} />
-
-          <h3>Property Details</h3>
           {/* <p>{JSON.stringify(p)}</p> */}
           <Listify obj={p} />
         </Col>
-        <Button type="primary" onClick={purchase}>
-          Purchase
-        </Button>
+        <Col span={4}></Col>
+        <Col span={12}>
+          <h2 className="float-left">Instructions</h2>
+          <div className="instruction-area">
+            <p></p>
+            <Steps direction="vertical" current={0}>
+              {steps.map(item => (
+                <Step key={item.title} title={item.title} description={item.description} />
+              ))}
+            </Steps>
+            <Button className="float-left" size="large" type="primary" onClick={purchase}>
+              Purchase
+            </Button>
+          </div>
+        </Col>
       </Row>
     </div>
   );

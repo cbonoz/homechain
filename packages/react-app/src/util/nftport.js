@@ -5,7 +5,8 @@ export const createNftFromFileData = (name, description, data, ownerAddress, cha
   const params = { chain: chain || "rinkeby", mint_to_address: ownerAddress, description, name };
 
   const formData = new FormData();
-  formData.append("file", data, data.name);
+  const blob = new Blob([]) || data; // Should be data, but can use web3.storage as source of truth, seeing 502's.
+  formData.append("file", blob, data.name);
 
   var options = {
     method: "POST",

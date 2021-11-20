@@ -12,7 +12,6 @@ import { createStream, initCeramic } from "../util/ceramic";
 import { DEFAULT_HOME_ICON } from "../constants";
 import { createNftFromFileData } from "../util/nftport";
 import { Listify } from "../util/listify";
-const toGatewayURL = e => e; // TODO: replace with https url for ipfs directory
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -22,7 +21,7 @@ const LAST_STEP = 3;
 
 const testAddress = createFullAddress();
 
-const UPLOAD_FILES = false;
+const UPLOAD_FILES = true;
 
 function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) {
   const [currentStep, setCurrentStep] = useState(0);
@@ -85,15 +84,12 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
 
       setLoading(true);
 
-      const sigData = sigRef.current.getTrimmedCanvas().toDataURL("image/png");
-      const uploadFiles = makeListingFiles(files, sigData);
-
       try {
         const nftData = await createNftFromFileData(info.title, info.description, files[0], address, "rinkeby");
 
         let d = {
           ...info,
-          nftTx: nftData.transaction_external_url,
+          nftUrl: nftData.transaction_external_url,
           nftContract: nftData.contract_address,
         };
 
@@ -103,24 +99,23 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
           } catch (e) {
             console.error(e);
           }
+
+          const streamId = await createStream(d);
+
+          const sigData = sigRef.current.getTrimmedCanvas().toDataURL("image/png");
+          const uploadFiles = makeListingFiles(files, sigData, { streamId });
           const cid = await storeFiles(uploadFiles);
 
           d = {
             ...d,
             cid,
+            streamId,
             ipfsUrl: ipfsUrl(cid),
             imgUrl: info.imgUrl || DEFAULT_HOME_ICON,
-          };
-
-          const res = await createStream(d);
-          const card = {
-            ...d,
-            stream: res,
-            nft: nftData,
             createdAt: new Date(),
           };
 
-          addCard(card); // TODO: add persistence (ex: moralis).
+          addCard(d); // TODO: add persistence (ex: moralis).
         }
 
         setResult(d);
@@ -228,7 +223,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
             <h3>Listing information</h3>
 
             {result.url && (
-              <a href={toGatewayURL(result.url)} target="_blank">
+              <a href={result.ipfsUrl} target="_blank">
                 Click here to view listing.
               </a>
             )}
