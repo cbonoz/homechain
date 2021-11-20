@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Steps, Button, Image } from "antd";
 import { DEFAULT_HOME_ICON } from "../constants";
 import { capitalize, DEMO_PROPERTIES } from "../util";
+import { getStreamForProperty } from "../util/ceramic";
+import { Listify } from "../util/listify";
+import logo from "../assets/icon.png";
 
 const { Step } = Steps;
 
@@ -22,9 +25,31 @@ const steps = [
 
 function PropertyDetails({ history, match, property }) {
   const pid = match && match.propertyId;
-  const p = property || DEMO_PROPERTIES[0];
+  const [p, setP] = useState(property || DEMO_PROPERTIES[0]);
+  const [loading, setLoading] = useState(false);
+  // const [data, setData] = useState({})
   const propTitle = p.title || "property";
   const listingTitle = `participate in NFT sale for ${propTitle}`;
+
+  const getProperty = async cid => {
+    if (!cid) {
+      return;
+    }
+    setLoading(true);
+
+    try {
+      const res = await getStreamForProperty(cid);
+      setP(res);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getProperty(pid);
+  }, [pid]);
 
   const purchase = () => {
     const unl = window.unlockProtocol;
@@ -62,7 +87,7 @@ function PropertyDetails({ history, match, property }) {
 
   return (
     <div>
-      <Image src={imgUrl} width={100} />
+      <img src={logo} className="header-icon" />
       <br />
       <h1>{capitalize(listingTitle)}.</h1>
       {/* <hr /> */}
@@ -78,15 +103,11 @@ function PropertyDetails({ history, match, property }) {
           </Steps>
         </Col>
         <Col span={12}>
+          <Image src={imgUrl} width={200} />
+
           <h3>Property Details</h3>
           {/* <p>{JSON.stringify(p)}</p> */}
-          {Object.keys(p).map((k, i) => {
-            return (
-              <li key={i}>
-                {capitalize(k)}: {JSON.stringify(p[k]).replaceAll('"', "")}
-              </li>
-            );
-          })}
+          <Listify obj={p} />
         </Col>
         <Button type="primary" onClick={purchase}>
           Purchase

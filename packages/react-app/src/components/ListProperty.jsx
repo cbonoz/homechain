@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Input, Button, Steps, Layout, Modal, Checkbox } from "antd";
 // import { createBucketWithFiles } from "../../util/bucket";
 // import { toGatewayURL } from "nft.storage";
-import { addCard, createFullAddress, DEMO_PROPERTIES } from "../util";
+import { addCard, createFullAddress, DEMO_PROPERTIES, ipfsUrl } from "../util";
 import { FileDropzone } from "./FileDropzone";
 import ReactSignatureCanvas from "react-signature-canvas";
 import IntegerStep from "./IntegerStep";
@@ -11,6 +11,7 @@ import { makeListingFiles, storeFiles } from "../util/stor";
 import { createStream, initCeramic } from "../util/ceramic";
 import { DEFAULT_HOME_ICON } from "../constants";
 import { createNftFromFileData } from "../util/nftport";
+import { Listify } from "../util/listify";
 const toGatewayURL = e => e; // TODO: replace with https url for ipfs directory
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -20,6 +21,8 @@ const { Step } = Steps;
 const LAST_STEP = 3;
 
 const testAddress = createFullAddress();
+
+const UPLOAD_FILES = false;
 
 function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) {
   const [currentStep, setCurrentStep] = useState(0);
@@ -41,6 +44,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
     percent: 10,
     limit: 10,
     eth: 1.0,
+    owner: address,
     collectibleOnly: true,
     imgUrl: "",
   });
@@ -85,34 +89,41 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
       const uploadFiles = makeListingFiles(files, sigData);
 
       try {
-        await initCeramic(address);
-      } catch (e) {
-        console.error(e);
-      }
+        const nftData = await createNftFromFileData(info.title, info.description, files[0], address, "rinkeby");
 
-      try {
-        const nftData = await createNftFromFileData(files[0]);
-
-        const cid = await storeFiles(uploadFiles);
-        const d = {
+        let d = {
           ...info,
           nftTx: nftData.transaction_external_url,
           nftContract: nftData.contract_address,
-          cid,
-          imgUrl: info.imgUrl || DEFAULT_HOME_ICON,
         };
-        const res = await createStream(d);
+
+        if (UPLOAD_FILES) {
+          try {
+            await initCeramic(address);
+          } catch (e) {
+            console.error(e);
+          }
+          const cid = await storeFiles(uploadFiles);
+
+          d = {
+            ...d,
+            cid,
+            ipfsUrl: ipfsUrl(cid),
+            imgUrl: info.imgUrl || DEFAULT_HOME_ICON,
+          };
+
+          const res = await createStream(d);
+          const card = {
+            ...d,
+            stream: res,
+            nft: nftData,
+            createdAt: new Date(),
+          };
+
+          addCard(card); // TODO: add persistence (ex: moralis).
+        }
 
         setResult(d);
-
-        const card = {
-          ...d,
-          stream: res,
-          nft: nftData,
-          createdAt: new Date(),
-        };
-
-        addCard(card); // TODO: add persistence (ex: moralis).
       } catch (e) {
         console.error("error creating listing", e);
         alert(e.toString());
@@ -213,22 +224,8 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
         return (
           <div className="complete-section">
             <h2 className="sell-header">Complete!</h2>
-
-            {Object.keys(result).map((k, i) => {
-              return (
-                <li key={i}>
-                  {k}: {JSON.stringify(result[k]).replaceAll('"', "")}
-                </li>
-              );
-            })}
+            <Listify obj={result} />
             <h3>Listing information</h3>
-            {Object.keys(info).map(k => {
-              return (
-                <li key={k}>
-                  {k}: {JSON.stringify(info[k]).replaceAll('"', "")}
-                </li>
-              );
-            })}
 
             {result.url && (
               <a href={toGatewayURL(result.url)} target="_blank">

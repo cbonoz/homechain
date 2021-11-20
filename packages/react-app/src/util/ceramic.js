@@ -43,12 +43,12 @@ export const createStream = async data => {
   return streamId;
 };
 
-export const loadStream = async streamId => {
+export const getStreamForProperty = async streamId => {
   // Stream id: identifier for the stream (using cid or stream identifier).
 
   const doc = await TileDocument.load(ceramic, streamId);
 
-  console.log(doc.content);
+  console.log("getStream", doc.content);
   return doc.content;
 };
 

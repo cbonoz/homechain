@@ -1,4 +1,5 @@
 import faker from "faker";
+import { DEFAULT_HOME_ICON } from "../constants";
 
 export const capitalize = s => {
   if (typeof s !== "string") return "";
@@ -11,6 +12,8 @@ export function bytesToSize(bytes) {
   return Math.round(bytes / Math.pow(1024, i), 2) + " " + sizes[i];
 }
 
+export const ipfsUrl = cid => `https://ipfs.io/ipfs/${cid}`;
+
 export const createFullAddress = () =>
   `${faker.address.streetAddress()}, ${faker.address.city()} ${faker.address.stateAbbr()}`;
 
@@ -18,6 +21,7 @@ const createProperty = () => ({
   id: faker.datatype.number(),
   title: faker.address.streetAddress(),
   description: "Own 1% of this property.",
+  imgUrl: DEFAULT_HOME_ICON,
 });
 
 export const DEMO_PROPERTIES = [createProperty(), createProperty(), createProperty()];

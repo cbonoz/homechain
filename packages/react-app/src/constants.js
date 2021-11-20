@@ -195,11 +195,11 @@ export const NETWORK = chainId => {
 export const ALCHEMY_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
 
 export const TARGET_NETWORK = NETWORKS.rinkeby;
-export const NFT_KEY = process.env.REACT_APP_NFT_KEY;
+export const NFT_PORT_KEY = process.env.REACT_APP_NFT_PORT_KEY;
 export const STORAGE_KEY = process.env.REACT_APP_STORAGE_KEY;
 export const APP_NAME = "HomeChain";
 export const APP_DESC = "Issue collectible NFTs against your real estate property.";
 
 export const DEFAULT_HOME_ICON = "https://icon-library.com/images/home-menu-icon/home-menu-icon-7.jpg";
 
-console.log("target_network", TARGET_NETWORK, STORAGE_KEY.substr(0, 4));
+console.log("target_network", TARGET_NETWORK, NFT_PORT_KEY, STORAGE_KEY.substr(0, 4));

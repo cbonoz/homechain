@@ -88,9 +88,23 @@
   min-height: 60vh;
 }
 
+.header-icon {
+  width: 100px;
+  margin: 25px;
+}
+
 .sig-canvas {
   border: 1px dotted black;
   /* margin: 20px; */
+  /* width: 400px; */
+}
+
+.sig-canvas {
+  width: 470px;
+}
+
+.sig-canvas p {
+  margin-left: 10px;
 }
 
 .sell-header {
