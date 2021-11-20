@@ -111,7 +111,7 @@ function PropertyDetails({ history, match, property }) {
             <p></p>
             <Steps direction="vertical" current={0}>
               {steps.map(item => (
-                <Step key={item.title} title={item.title} description={item.description} />
+                <Step key={item.title} title={item.title} description={item.content} />
               ))}
             </Steps>
             <Button className="float-left" size="large" type="primary" onClick={purchase}>
