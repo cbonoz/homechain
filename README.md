@@ -18,6 +18,12 @@ One of the biggest problems is transferring and representing ownership of real e
 
 HomeChain enables users to create either own NFT's around properties they own:
 
+* Filecoin for property signature and proof of ownership (document) storage.
+* React for file upload and signature collection
+* Ceramic streams for noSQL store of the property, links to the NFT.
+* NFTport for NFT generation against the same entity.
+* Covalent for doing in-app lookups of address history around an owner or property listing.
+
 - Users can create terms to allow others to deposit to it.
 - Use react signature canvas to collect the user signature (checking against the deed) and uploading as an image file to the IPFS folder for the property.
 - After being uploaded, prospective buyers/participants (up to the limit specified by the issuer) can discover those listings and purchase units of ownership using attachment the NFT as a source of truth.
