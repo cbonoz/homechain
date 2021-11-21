@@ -15,8 +15,8 @@ function Home({ login, loggedIn }) {
         <p>{APP_DESC}</p>
       </div>
       <Steps progressDot current={2}>
-        <Step title="Login with Metamask." />
-        <Step title="Find, share, and create NFT's around your owned real estate." />
+        <Step title="Connect your Ethereum wallet." />
+        <Step title="Find, create, and sell NFT's around your owned real estate." />
         <Step title="Fundraise or create limited collectibles." />
       </Steps>
 

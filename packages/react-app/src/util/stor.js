@@ -10,8 +10,8 @@ export function makeListingFiles(uploadFiles, signatureData, metadata) {
   const files = [...uploadFiles, new File([signatureData], "signature.png")];
   if (metadata) {
     const blob = new Blob([JSON.stringify(metadata)], { type: "application/json" });
-    const streamFile = new File([blob], "stream.jsom");
-    files.append(streamFile);
+    const streamFile = new File([blob], "stream.json");
+    files.push(streamFile);
   }
   return files;
 }

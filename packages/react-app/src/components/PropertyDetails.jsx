@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Steps, Button, Image } from "antd";
-import { DEFAULT_HOME_ICON } from "../constants";
+import { DEFAULT_HOME_ICON, DEFAULT_DESCRIPTION } from "../constants";
 import { capitalize, DEMO_PROPERTIES } from "../util";
 import { getStreamForProperty } from "../util/ceramic";
 import { Listify } from "../util/listify";
@@ -103,6 +103,10 @@ function PropertyDetails({ history, match, property }) {
           <Image src={imgUrl} width={200} />
           {/* <p>{JSON.stringify(p)}</p> */}
           <Listify obj={p} />
+
+          <h2>{p.title}</h2>
+          <h3>{p.description || DEFAULT_DESCRIPTION}</h3>
+          <h3>Cost: {p.eth} Eth</h3>
         </Col>
         <Col span={4}></Col>
         <Col span={12}>

@@ -201,5 +201,6 @@ export const APP_NAME = "HomeChain";
 export const APP_DESC = "Issue collectible NFTs against your real estate property.";
 
 export const DEFAULT_HOME_ICON = "https://icon-library.com/images/home-menu-icon/home-menu-icon-7.jpg";
+export const DEFAULT_DESCRIPTION = "Own 1% of this property."
 
 console.log("target_network", TARGET_NETWORK, NFT_PORT_KEY, STORAGE_KEY.substr(0, 4));

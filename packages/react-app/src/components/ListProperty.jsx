@@ -85,7 +85,13 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
       setLoading(true);
 
       try {
-        const nftData = await createNftFromFileData(info.title, info.description, files[0], address, "rinkeby");
+        const { data: nftData } = await createNftFromFileData(
+          info.title,
+          info.description,
+          files[0],
+          address,
+          "rinkeby",
+        );
 
         let d = {
           ...info,
@@ -121,7 +127,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
         setResult(d);
       } catch (e) {
         console.error("error creating listing", e);
-        alert(e.toString());
+        alert("Error creating listing: " + e.toString());
         return;
       } finally {
         setLoading(false);
@@ -222,9 +228,15 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
             <Listify obj={result} />
             <h3>Listing information</h3>
 
-            {result.url && (
+            {result.ipfsUrl && (
               <a href={result.ipfsUrl} target="_blank">
-                Click here to view listing.
+                Click here to view assets.
+              </a>
+            )}
+            <br />
+            {result.nftUrl && (
+              <a href={result.nftUrl} target="_blank">
+                Click here to view created NFT.
               </a>
             )}
           </div>
@@ -262,8 +274,8 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
         <Modal
           confirmLoading={loading}
           title="Enter signature"
+          footer={null}
           visible={showModal}
-          onOk={handleOk}
           cancelText={"Cancel"}
           onCancel={() => setShowModal(false)}
         >
@@ -280,7 +292,14 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
             />
             <p>Clicking 'Done' below will create and list the NFT for purchase.</p>
           </div>
-          <Button onClick={() => sigRef.current.clear()}>Clear</Button>
+          <div>
+            <Button disabled={loading} onClick={() => sigRef.current.clear()}>
+              Clear
+            </Button>
+            <Button disabled={loading} loading={loading} onClick={handleOk}>
+              Confirm Listing
+            </Button>
+          </div>
         </Modal>
       </Footer>
     </div>

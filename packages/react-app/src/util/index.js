@@ -1,5 +1,5 @@
 import faker from "faker";
-import { DEFAULT_HOME_ICON } from "../constants";
+import { DEFAULT_DESCRIPTION, DEFAULT_HOME_ICON } from "../constants";
 
 export const capitalize = s => {
   if (typeof s !== "string") return "";
@@ -22,7 +22,7 @@ const TEST_CID = "bafybeihzu3d2ekfoyyr4wlwyzg6nf4i6qm2qhmsfatenurwxs6bewjchue";
 const createProperty = () => ({
   id: TEST_CID || faker.datatype.number(),
   title: faker.address.streetAddress(),
-  description: "Own 1% of this property.",
+  description: DEFAULT_DESCRIPTION,
   imgUrl: DEFAULT_HOME_ICON,
 });
 
