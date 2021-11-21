@@ -47,22 +47,31 @@ Related links: https://www.forbes.com/sites/nataliakarayaneva/2021/04/08/nfts-wo
 
 #### Home page
 <img src="./img/home.png" width=800/>
+
 #### Creating a new listing
 <img src="./img/info.png" width=800/>
+
 #### Signature and proof of ownership document required for listing
 <img src="./img/sign.png" width=800/>
+
 #### Completed upload
 <img src="./img/complete.png" width=800/>
+
 #### Uploaded IPFS content (deed and signature)
 <img src="./img/ipfs.png" width=800/>
+
 #### NFT created on upload
 <img src="./img/nftport.png" width=800/>
+
 #### Once listed, property is available or search
 <img src="./img/search.png" width=800/>
+
 #### Property details page
 <img src="./img/details.png" width=800/>
+
 #### Owner history of a property
 <img src="./img/history.png" width=800/>
+
 #### Participate in a listed NFT sale
 <img src="./img/purchase.png" width=800/>
 
