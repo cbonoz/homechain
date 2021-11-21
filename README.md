@@ -16,13 +16,7 @@ One of the biggest problems is transferring and representing ownership of real e
 - If ownership is distributed, who is responsible for maintaining the property?
 - How are duplicate or unauthorized NFT's avoided?
 
-HomeChain enables users to create either own NFT's around properties they own:
-
-* Filecoin for property signature and proof of ownership (document) storage.
-* React for file upload and signature collection
-* Ceramic streams for noSQL store of the property, links to the NFT.
-* NFTport for NFT generation against the same entity.
-* Covalent for doing in-app lookups of address history around an owner or property listing.
+HomeChain enables users to create either own NFT's around properties they own.
 
 - Users can create terms to allow others to deposit to it.
 - Use react signature canvas to collect the user signature (checking against the deed) and uploading as an image file to the IPFS folder for the property.
@@ -92,9 +86,9 @@ Related links: https://www.forbes.com/sites/nataliakarayaneva/2021/04/08/nfts-wo
 
 <img src="./img/history.png" width=800/>
 
-#### Participate in a listed NFT sale
+#### Submit payment via unlock to participate in a listed NFT sale
 
-<img src="./img/purchase.png" width=800/>
+<img src="./img/unlock.png" width=800/>
 
 <!--
 
