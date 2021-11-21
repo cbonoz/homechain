@@ -102,11 +102,14 @@ function PropertyDetails({ history, match, property }) {
           <h2>Property Details</h2>
           <Image src={imgUrl} width={200} />
           {/* <p>{JSON.stringify(p)}</p> */}
-          <Listify obj={p} />
 
           <h2>{p.title}</h2>
           <h3>{p.description || DEFAULT_DESCRIPTION}</h3>
           <h3>Cost: {p.eth} Eth</h3>
+          <hr />
+          <br />
+          <h2>Full data</h2>
+          <Listify obj={p} />
         </Col>
         <Col span={4}></Col>
         <Col span={12}>
