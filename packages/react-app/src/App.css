@@ -16,6 +16,10 @@
   float: left;
 }
 
+.float-right {
+  float: right;
+}
+
 .clear {
   clear: both;
 }
@@ -144,6 +148,10 @@
   border: 1px dotted lightgray;
   padding-top: 20px;
   height: 100px;
+  cursor: pointer;
+}
+
+.pointer {
   cursor: pointer;
 }
 

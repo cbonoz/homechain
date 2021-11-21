@@ -483,7 +483,9 @@ function App(props) {
             <Route path={["/search"]} render={props => <Discover {...props} setProperty={setProperty} />} />
             <Route
               path={"/property/:propertyId"}
-              render={props => <PropertyDetails {...props} property={property} setProperty={setProperty} />}
+              render={props => (
+                <PropertyDetails {...props} property={property} setProperty={setProperty} address={address} />
+              )}
             />
             <Route path={["/list-property"]}>
               <ListProperty

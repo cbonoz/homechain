@@ -18,12 +18,14 @@ export const createFullAddress = () =>
   `${faker.address.streetAddress()}, ${faker.address.city()} ${faker.address.stateAbbr()}`;
 
 const TEST_CID = "bafybeihzu3d2ekfoyyr4wlwyzg6nf4i6qm2qhmsfatenurwxs6bewjchue";
-
+// https://rinkeby.etherscan.io/tx/0xf802cdbf64af5bdbd7ad4935e694d144e7086bd9138f8f4b8091d9062df7fdbf
 const createProperty = () => ({
   id: TEST_CID || faker.datatype.number(),
   title: faker.address.streetAddress(),
+  eth: "1.0",
   description: DEFAULT_DESCRIPTION,
   imgUrl: DEFAULT_HOME_ICON,
+  nftContract: "0xf18eE101d2081478ce68Eab4E6B8f7Cb0fBBed4e",
 });
 
 export const DEMO_PROPERTIES = [createProperty(), createProperty(), createProperty()];

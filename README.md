@@ -4,7 +4,20 @@
 
 ## HomeChain
 
-Represent ownership of your home by a NFT on filecoin.
+Find, create, and sell NFT's around your owned real estate.
+
+NFT platforms for real estate exist, but one of the biggest problems is governance.
+* Who enforces that the ownership is represented by this particular NFT?
+* If ownership is distributed, who is responsible for 
+
+
+- Capped out at 10%, can't relinquish more than that.
+- Ex: 1.0 eth per 1% ownership (10 max percent, 10 participants), // effective default is 1 eth for 1% ~4k, ~400k net valuation.
+- Create form flow having person upload proof of ownership of home
+- Create terms to allow others to deposit to it
+- Use react signature canvas to collect the user signature (checking against the deed) and uploading as an image file to the IPFS folder for the property.
+- After being uploaded, prospective buyers/participants (up to the limit specified by the issuer) can purchase units of ownership around the NFT. 
+- Property NFT's uploaded can either be ownership-oriented or simply collectible (i.e. could be used in the case of a celebrity or notable location).
 
 <p><b>Note this app is a prototype and would need additional work to be production ready.</b></p>
 
@@ -15,7 +28,15 @@ HomeChain has the following environment requirements:
 <pre>
 REACT_APP_NFT_PORT_KEY=XXX # your nftport.xyz api key.
 REACT_APP_STORAGE_KEY=XXX  # your web3.storage api key.
+REACT_APP_COVALENT_KEY=XXX # your covalent key.
 </pre>
+
+Sponsors:
+Ceramic: Distributed mutable data storage for the marketplace metadata. Search support.
+IPFS / Filecoin: Store associated files, signature, and proof of ownership (ex: deed/title).
+NFTPort: NFT issuance for the issued real estate backed NFT (minting).
+Unlock protocol: NFT purchase / paywall. Once an NFT is uploaded, unlock protocol regulates access via required payment>
+Covalent: Used for accessing and presenting the transfer and ownership history for a particular contract (property).
 
 <!--
 Tap into the equity of your home.
@@ -25,12 +46,11 @@ Tap into the equity of your home.
 
 https://www.forbes.com/sites/nataliakarayaneva/2021/04/08/nfts-work-for-digital-art-they-also-work-perfectly-for-real-estate/?sh=775f435e43f3
 
-Sponsors:
-Ceramic: Distributed mutable data storage for the marketplace metadata. Search support.
-IPFS / Filecoin: Store associated files, signature, and proof of ownership (ex: deed/title).
-NFTPort: NFT issuance for the issued real estate backed NFT (minting).
-Unlock protocol: NFT purchase / paywall. Once an NFT is uploaded, unlock protocol regulates access (via payments).
 
+
+ex:
+https://rinkeby.etherscan.io/tx/0x68888984adab214ceca46d539290b4e9fcc7851e80796723abf2a03ea58f07bb
+https://ipfs.io/ipfs/bafybeigrilyu2oxnhywaqn6ff6wciqfyzf254mpmla4dc4sohuhbmcgpqm
 ---
 Chainlink
 Moralis

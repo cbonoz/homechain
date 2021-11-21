@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Steps, Button, Image } from "antd";
-import { DEFAULT_HOME_ICON, DEFAULT_DESCRIPTION } from "../constants";
+import { Row, Col, Steps, Button, Image, Modal } from "antd";
+import { DEFAULT_HOME_ICON, DEFAULT_DESCRIPTION, RINKEBY_CHAIN_ID } from "../constants";
 import { capitalize, DEMO_PROPERTIES } from "../util";
 import { getStreamForProperty } from "../util/ceramic";
-import { Listify } from "../util/listify";
 import logo from "../assets/icon.png";
+import { getTransactions } from "../util/covalent";
 
 const { Step } = Steps;
 
@@ -23,10 +23,12 @@ const steps = [
   },
 ];
 
-function PropertyDetails({ history, match, property }) {
+function PropertyDetails({ match, property, address }) {
   const pid = match && match.params.propertyId;
   const [p, setP] = useState(property || DEMO_PROPERTIES[0]);
   const [loading, setLoading] = useState(false);
+  const [history, setHistory] = useState();
+  const [fullData, setFullData] = useState();
   // const [data, setData] = useState({})
   const propTitle = p.title || "property";
   const listingTitle = `participate in NFT sale for ${propTitle}`;
@@ -55,6 +57,24 @@ function PropertyDetails({ history, match, property }) {
     }
   }, [pid]);
 
+  const getHistory = async () => {
+    setLoading(true);
+    const { nftContract, nftUrl, owner } = p;
+    if (!nftContract) {
+      alert("No history available for contract");
+      return;
+    }
+
+    try {
+      const { data } = await getTransactions(owner || address || nftContract);
+      setHistory(data);
+    } catch (e) {
+      console.error("error getting history", e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const purchase = () => {
     const unl = window.unlockProtocol;
     if (!unl) {
@@ -68,7 +88,7 @@ function PropertyDetails({ history, match, property }) {
       locks: {
         "0xA5c657Ce8f1f77283344985Ac00a5303f86b45e7": {
           // TODO: use dynamic lock id
-          network: 4, // rinkeby
+          network: RINKEBY_CHAIN_ID, // rinkeby
           name: "Unlock",
         },
       },
@@ -107,9 +127,17 @@ function PropertyDetails({ history, match, property }) {
           <h3>{p.description || DEFAULT_DESCRIPTION}</h3>
           <h3>Cost: {p.eth} Eth</h3>
           <hr />
-          <br />
-          <h2>Full data</h2>
-          <Listify obj={p} />
+          <a
+            href=""
+            className="pointer"
+            onClick={e => {
+              e.preventDefault();
+              setFullData(p);
+            }}
+          >
+            Full data
+          </a>
+          {/* <Listify obj={p} /> */}
         </Col>
         <Col span={4}></Col>
         <Col span={12}>
@@ -124,9 +152,48 @@ function PropertyDetails({ history, match, property }) {
             <Button className="float-left" size="large" type="primary" onClick={purchase}>
               Purchase
             </Button>
+            <Button className="float-left" size="large" type="secondary" onClick={getHistory}>
+              View history
+            </Button>
           </div>
         </Col>
       </Row>
+
+      <Modal
+        size="large"
+        width={800}
+        title={"Full data for " + p.title}
+        onCancel={() => setFullData(undefined)}
+        footer={null}
+        visible={!!fullData}
+      >
+        <pre>{JSON.stringify(fullData || {}, null, "\t")}</pre>
+        <p>
+          <Button className="float-right" onClick={() => setFullData(undefined)}>
+            Ok
+          </Button>
+        </p>
+        <br />
+        <br />
+      </Modal>
+
+      <Modal
+        size="large"
+        width={800}
+        title={"View history"}
+        onCancel={() => setHistory(undefined)}
+        visible={!!history}
+        footer={null}
+      >
+        <pre>{JSON.stringify(history || {}, null, "\t")}</pre>
+        <p>
+          <Button className="float-right" onClick={() => setHistory(undefined)}>
+            Ok
+          </Button>
+        </p>
+        <br />
+        <br />
+      </Modal>
     </div>
   );
 }
