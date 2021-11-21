@@ -67,7 +67,7 @@ function PropertyDetails({ match, property, address }) {
 
     try {
       const { data } = await getTransactions(owner || address || nftContract);
-      setHistory(data);
+      setHistory(data.data);
     } catch (e) {
       console.error("error getting history", e);
     } finally {
@@ -185,7 +185,9 @@ function PropertyDetails({ match, property, address }) {
         visible={!!history}
         footer={null}
       >
-        <pre>{JSON.stringify(history || {}, null, "\t")}</pre>
+        <div className="history-area">
+          <pre>{JSON.stringify(history || {}, null, "\t")}</pre>
+        </div>
         <p>
           <Button className="float-right" onClick={() => setHistory(undefined)}>
             Ok

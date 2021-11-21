@@ -33,6 +33,11 @@
   margin-left: 10px;
 }
 
+.history-area pre {
+  height: 400px !important;
+  overflow: scroll;
+}
+
 .ant-collapse-content-box p {
   max-width: 800px;
   margin: 0 auto;
