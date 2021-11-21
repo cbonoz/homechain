@@ -6,7 +6,9 @@
 
 Find, create, and sell NFT's around your owned real estate.
 
-NFT platforms for real estate exist, but one of the biggest problems is governance.
+There's been talk to use blockchain to enable rapid transactions and partial sales of real estate, but in practice this can be difficult.
+
+One of the biggest problems is transferring and representing ownership of real estate is ensuring governance and trust.
 
 - Who enforces that the ownership is represented by this particular NFT?
 - If ownership is distributed, who is responsible for maintaining the property?
