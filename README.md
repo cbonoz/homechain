@@ -38,11 +38,14 @@ Filecoin
 
 Demo flow:
 * Stat/web news about home/housing market
-* NFT platforms for real estate exist, but a problem is governance.
+* NFT platforms for real estate exist, but one of the biggest problems is governance.
+* Capped out at 10%, can't relinquish more than that.
+* Ex: 1.0 eth per 1% ownership (10 max percent, 10 participants), // effective default is 1 eth for 1% ~4k, ~400k net valuation.
 * Create form flow having person upload proof of ownership of home
 * Create terms to allow others to deposit to it
 * Use react signature canvas to collect the user signature (checking against the deed) and uploading as an image file to the IPFS folder for the property.
 * Generate NFT after form completion
+* Uploaded proof of ownership
 - The technology here could be leveraged for other esignature purpsoes as well (beyond real estate), where you want to esign a document and have the signature tied to the document in a filecoin directory.
 - This actually serves that purpose but with a self-signed title document.
 * API call from chainlink to get house price estimate.

@@ -42,7 +42,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
     description: `${testAddress}. Own 1% of this property`,
     percent: 10,
     limit: 10,
-    eth: 1.0,
+    eth: 1.0, // effective default is 1 eth for 1% ~4k, ~400k net valuation.
     owner: address,
     collectibleOnly: true,
     imgUrl: "",
