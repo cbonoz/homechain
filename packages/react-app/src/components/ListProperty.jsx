@@ -272,6 +272,8 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
 
         {/* https://github.com/agilgur5/react-signature-canvas */}
         <Modal
+          width={600}
+          height={400}
           confirmLoading={loading}
           title="Enter signature"
           footer={null}
@@ -286,6 +288,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
           </p>
           <div className="sig-canvas">
             <ReactSignatureCanvas
+              canvasProps={{ width: 475, height: 200, className: "sigCanvas" }}
               ref={ref => {
                 sigRef.current = ref;
               }}
