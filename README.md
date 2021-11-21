@@ -8,16 +8,15 @@ Find, create, and sell NFT's around your owned real estate.
 
 NFT platforms for real estate exist, but one of the biggest problems is governance.
 * Who enforces that the ownership is represented by this particular NFT?
-* If ownership is distributed, who is responsible for 
+* If ownership is distributed, who is responsible for maintaining the property?
+* How are duplicate or unauthorized NFT's avoided?
 
 
 - Capped out at 10%, can't relinquish more than that.
 - Ex: 1.0 eth per 1% ownership (10 max percent, 10 participants), // effective default is 1 eth for 1% ~4k, ~400k net valuation.
 - Create form flow having person upload proof of ownership of home
 - Create terms to allow others to deposit to it
-- Use react signature canvas to collect the user signature (checking against the deed) and uploading as an image file to the IPFS folder for the property.
-- After being uploaded, prospective buyers/participants (up to the limit specified by the issuer) can purchase units of ownership around the NFT. 
-- Property NFT's uploaded can either be ownership-oriented or simply collectible (i.e. could be used in the case of a celebrity or notable location).
+
 
 <p><b>Note this app is a prototype and would need additional work to be production ready.</b></p>
 
@@ -42,11 +41,32 @@ Covalent: Used for accessing and presenting the transfer and ownership history f
 Tap into the equity of your home.
 -->
 
+Related links: https://www.forbes.com/sites/nataliakarayaneva/2021/04/08/nfts-work-for-digital-art-they-also-work-perfectly-for-real-estate/?sh=775f435e43f3
+
+### Screenshots
+
+#### Home page
+<img src="./img/home.png" width=800/>
+#### Creating a new listing
+<img src="./img/info.png" width=800/>
+#### Signature and proof of ownership document required for listing
+<img src="./img/sign.png" width=800/>
+#### Completed upload
+<img src="./img/complete.png" width=800/>
+#### Uploaded IPFS content (deed and signature)
+<img src="./img/ipfs.png" width=800/>
+#### NFT created on upload
+<img src="./img/nftport.png" width=800/>
+#### Once listed, property is available or search
+<img src="./img/search.png" width=800/>
+#### Property details page
+<img src="./img/details.png" width=800/>
+#### Owner history of a property
+<img src="./img/history.png" width=800/>
+#### Participate in a listed NFT sale
+<img src="./img/purchase.png" width=800/>
+
 <!--
-
-https://www.forbes.com/sites/nataliakarayaneva/2021/04/08/nfts-work-for-digital-art-they-also-work-perfectly-for-real-estate/?sh=775f435e43f3
-
-
 
 ex:
 https://rinkeby.etherscan.io/tx/0x68888984adab214ceca46d539290b4e9fcc7851e80796723abf2a03ea58f07bb
@@ -64,6 +84,8 @@ Demo flow:
 * Create form flow having person upload proof of ownership of home
 * Create terms to allow others to deposit to it
 * Use react signature canvas to collect the user signature (checking against the deed) and uploading as an image file to the IPFS folder for the property.
+* After being uploaded, prospective buyers/participants (up to the limit specified by the issuer) can purchase units of ownership around the NFT. 
+* Property NFT's uploaded can either be ownership-oriented or simply collectible (i.e. could be used in the case of a celebrity or notable location).
 * Generate NFT after form completion
 * Uploaded proof of ownership
 - The technology here could be leveraged for other esignature purpsoes as well (beyond real estate), where you want to esign a document and have the signature tied to the document in a filecoin directory.
@@ -77,7 +99,7 @@ Create a limited partnership (LP), issue a token on whatever blockchain you want
 -->
 
 <!--
-Screenshots
+
 
 Future work
 
