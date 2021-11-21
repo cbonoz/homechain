@@ -153,7 +153,7 @@ function PropertyDetails({ match, property, address }) {
               Purchase
             </Button>
             <Button className="float-left" size="large" type="secondary" onClick={getHistory}>
-              View history
+              Owner history
             </Button>
           </div>
         </Col>
