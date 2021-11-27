@@ -12,6 +12,8 @@ import { createStream, initCeramic } from "../util/ceramic";
 import { DEFAULT_HOME_ICON } from "../constants";
 import { createNftFromFileData } from "../util/nftport";
 import { Listify } from "../util/listify";
+import { saveProperty } from "../util/moral";
+import { deployContract } from "../util/homechain";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -122,6 +124,22 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
           };
 
           addCard(d); // TODO: add persistence (ex: moralis).
+          try {
+            if (!d.collectibleOnly) {
+              // Deploy as interactable smart contract.
+              try {
+                await deployContract(d);
+              } catch (e) {
+                console.error("error deploying contract", e);
+              }
+            }
+            // Save property after contract deploy (if applicable).
+            await saveProperty(d);
+          } catch (e) {
+            console.error("error saving property", e);
+          } finally {
+            setLoading(false);
+          }
         }
 
         setResult(d);

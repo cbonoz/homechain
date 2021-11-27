@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { DEMO_PROPERTIES } from "../util";
+import { DEMO_PROPERTIES, USE_LOCAL } from "../util";
+import { getProperties } from "../util/moral";
 import PropertyCard from "./PropertyCard";
 
 function Discover({ setProperty, history }) {
   const [properties, setProperties] = useState();
+  const [loading, setLoading] = useState(false);
+
+  const fetchProperties = async () => {
+    setLoading(true);
+    try {
+      const results = await getProperties();
+      setProperties(results);
+    } catch (e) {
+      console.error("error getting properties", e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setProperties(DEMO_PROPERTIES);
+    if (USE_LOCAL) {
+      setProperties(DEMO_PROPERTIES);
+      return;
+    }
+
+    fetchProperties();
   }, []);
 
   return (

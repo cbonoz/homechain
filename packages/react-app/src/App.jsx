@@ -21,7 +21,7 @@ import { Account, Header, Ramp, ThemeSwitch } from "./components";
 import Discover from "./components/Discover";
 import Home from "./components/Home";
 import ListProperty from "./components/ListProperty";
-import { INFURA_ID, NETWORK, ALCHEMY_KEY, TARGET_NETWORK } from "./constants";
+import { INFURA_ID, NETWORK, ALCHEMY_KEY, TARGET_NETWORK, MORALIS_SERVER, MORALIS_ID } from "./constants";
 import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
@@ -95,6 +95,7 @@ const web3Modal = new Web3Modal({
         infuraId: INFURA_ID,
         rpc: {
           1: `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_KEY}`, // mainnet // For more WalletConnect providers: https://docs.walletconnect.org/quick-start/dapps/web3-provider#required
+          4: `https://eth-rinkeby.alchemyapi.io/v2/${ALCHEMY_KEY}`,
           42: `https://kovan.infura.io/v3/${INFURA_ID}`,
           100: "https://dai.poa.network", // xDai
         },
@@ -238,7 +239,7 @@ function App(props) {
   ]);
 
   // keep track of a variable from the contract in the local React state:
-  const purpose = useContractReader(readContracts, "YourContract", "purpose");
+  const purpose = useContractReader(readContracts, "HomeChainContract", "purpose");
 
   /*
   const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
@@ -367,6 +368,27 @@ function App(props) {
       </div>
     );
   }
+  const [user, setUser] = useState()
+  const loginMoralis = async () => {
+    let currentUser = Moralis.User.current();
+    if (!currentUser) {
+      currentUser = await Moralis.authenticate({ signingMessage: "Log in using Moralis" })
+      setUser(currentUser)
+      setAddress(currentUser.get('ethAddress'))
+  }
+
+  const logoutMoralis = async () => {
+    await Moralis.User.logOut()
+    setUser(undefined)
+    setAddress(undefined)
+  }
+
+  useEffect(() => {
+    const serverUrl = MORALIS_SERVER
+    const appId = MORALIS_ID
+    console.log('moralis start', serverUrl, appId)
+    Moralis.start({ serverUrl, appId });
+  }, [])
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();

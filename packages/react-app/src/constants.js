@@ -192,7 +192,8 @@ export const NETWORK = chainId => {
     }
   }
 };
-export const ALCHEMY_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF";
+const DEFAULT_ALCHEMY_KEY = "oKxs-03sij-U_N0iOlrSsZFr29-IqbuF"; // scaffold-eth default mainnet value.
+export const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY || DEFAULT_ALCHEMY_KEY;
 
 export const TARGET_NETWORK = NETWORKS.rinkeby;
 export const NFT_PORT_KEY = process.env.REACT_APP_NFT_PORT_KEY;
@@ -200,10 +201,12 @@ export const STORAGE_KEY = process.env.REACT_APP_STORAGE_KEY;
 export const COVALENT_KEY = process.env.REACT_APP_COVALENT_KEY;
 export const APP_NAME = "HomeChain";
 export const APP_DESC = "Issue collectible NFTs against your real estate property.";
-export const RINKEBY_CHAIN_ID = 4
-export const MAIN_CHAIN_ID = 1
+export const RINKEBY_CHAIN_ID = 4;
+export const MAIN_CHAIN_ID = 1;
+export const MORALIS_ID = process.env.REACT_APP_MORALIS_ID;
+export const MORALIS_SERVER = process.env.REACT_APP_MORALIS_SERVER;
 
 export const DEFAULT_HOME_ICON = "https://icon-library.com/images/home-menu-icon/home-menu-icon-7.jpg";
-export const DEFAULT_DESCRIPTION = "Own 1% of this property."
+export const DEFAULT_DESCRIPTION = "Own 1% of this property.";
 
 console.log("target_network", TARGET_NETWORK, NFT_PORT_KEY, STORAGE_KEY.substr(0, 4));

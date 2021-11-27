@@ -6,22 +6,17 @@
 
 Find, create, and sell NFT's around your owned real estate.
 
-### Motivation
+### What it does
 
-There's been talk to use blockchain to enable rapid transactions, partial sales, and better auditing of real estate, but in practice this can be difficult.
+HomeChain enables users to create either own NFT's around properties they own:
 
-One of the biggest problems is transferring and representing ownership of real estate is ensuring governance:
+Users can create the terms of the NFT and allow others to deposit to it.
+ Proof of ownership,such as a title or deed, is uploaded on HomeChain. It then collects the user's signature and uploads it as an image file to the IPFS folder for the property.
+ After upload, prospective buyers/participants (up to the limit specified by the issuer) can discover previously-created listings and purchase units of ownership using attachment to the NFT metadata source of truth.
+- Property NFTs can either be ownership-oriented or collectible (i.e. collectible commonly in the case of a celebrity or notable location).
+- HomeChain's signature model could be extended to support arbitrary documents where a signature is tied to an esigned document on IPFS in the future.
 
-- Who enforces that the ownership is represented by this particular NFT?
-- If ownership is distributed, who is responsible for maintaining the property?
-- How are duplicate or unauthorized NFT's avoided?
-
-HomeChain enables users to create either own NFT's around properties they own.
-
-- Users can create terms to allow others to deposit to it.
-- Use react signature canvas to collect the user signature (checking against the deed) and uploading as an image file to the IPFS folder for the property.
-- After being uploaded, prospective buyers/participants (up to the limit specified by the issuer) can discover those listings and purchase units of ownership using attachment the NFT as a source of truth.
-- Property NFT's uploaded can either be ownership-oriented or simply collectible (i.e. could be used in the case of a celebrity or notable location).
+Each property gets deployed as its own smart contract. With the price/appraised value of the property fixed to the contract (uses a Chainlink-enabled SmartZip API call).
 
 <p><b>Note this app is a prototype and would need additional work to be production ready.</b></p>
 
@@ -30,23 +25,34 @@ HomeChain enables users to create either own NFT's around properties they own.
 HomeChain has the following environment requirements:
 
 <pre>
-REACT_APP_NFT_PORT_KEY=XXX # your nftport.xyz api key.
-REACT_APP_STORAGE_KEY=XXX  # your web3.storage api key.
-REACT_APP_COVALENT_KEY=XXX # your covalent key.
+    REACT_APP_NFT_PORT_KEY=XXX # your nftport.xyz api key
+    REACT_APP_STORAGE_KEY=XXX  # your web3.storage api key
+    REACT_APP_MORALIS_ID=XXX # your moralis app id
+    REACT_APP_MORALIS_SERVER=XXX # your moralis server id
 </pre>
 
 Sponsors:
+Chainlink: Each property
 Ceramic: Distributed mutable data storage for the marketplace metadata. Search support.
 IPFS / Filecoin: Store associated files, signature, and proof of ownership (ex: deed/title).
 NFTPort: NFT issuance for the issued real estate backed NFT (minting).
 Unlock protocol: NFT purchase / paywall. Once an NFT is uploaded, unlock protocol regulates access via required payment.
-Covalent: Used for accessing and presenting the transfer and ownership history for a particular contract or property. Note covalent use in app is connected to mainnet by default (rinkeby not supported.)
+
+### Running the app
+
+Define the above environment variables and run:
+
+`yarn && yarn start`
+
+By default, the app is configured for blockchain interactions against the `rinkeby` eth testnet.
 
 <!--
 Tap into the equity of your home.
 -->
 
-Related links: https://www.forbes.com/sites/nataliakarayaneva/2021/04/08/nfts-work-for-digital-art-they-also-work-perfectly-for-real-estate/?sh=775f435e43f3
+### Related links
+
+https://www.forbes.com/sites/nataliakarayaneva/2021/04/08/nfts-work-for-digital-art-they-also-work-perfectly-for-real-estate/?sh=775f435e43f3
 
 ### Screenshots
 
@@ -119,58 +125,22 @@ Demo flow:
 * Login (powered by moralis).
 * Search listings (backed by moralis).
 
+### Notes
+
+One of the biggest problems is transferring and representing ownership of real estate on a blockchain is ensuring governance:
+
+- Who enforces that the ownership is represented by this particular NFT?
+- If ownership is distributed, who is responsible for maintaining the property?
+- How are duplicate or unauthorized NFT's avoided?
+
+
 Create a limited partnership (LP), issue a token on whatever blockchain you want. Make the bylaws of the LP state that ownership and voting rights for LP is dictated by ownership of said token. Transfer ownership of one or more pieces of real estate to the LP. Whether a single home or bundle. Now you have this LP which owns one or more assets, and you can transfer around ownership of the LP itself by just sending tokens around.
 
 -->
 
-<!--
-
-
-Future work
+### Future work
 
 ### Useful links
 * https://chainlink-fall-hackathon-2021.devpost.com/ --
-* https://showcase.ethglobal.com/web3jam/prizes
--->
 
 ### Dev Notes
-
-# 🏄‍♂️ Quick Start
-
-Prerequisites: [Node](https://nodejs.org/en/download/) plus [Yarn](https://classic.yarnpkg.com/en/docs/install/) and [Git](https://git-scm.com/downloads)
-
-> clone/fork 🏗 scaffold-eth:
-
-```bash
-git clone https://github.com/austintgriffith/scaffold-eth.git
-```
-
-> install and start your 👷‍ Hardhat chain:
-
-```bash
-cd scaffold-eth
-yarn install
-yarn chain
-```
-
-> in a second terminal window, start your 📱 frontend:
-
-```bash
-cd scaffold-eth
-yarn start
-```
-
-> in a third terminal window, 🛰 deploy your contract:
-
-```bash
-cd scaffold-eth
-yarn deploy
-```
-
-🔏 Edit your smart contract `YourContract.sol` in `packages/hardhat/contracts`
-
-📝 Edit your frontend `App.jsx` in `packages/react-app/src`
-
-💼 Edit your deployment scripts in `packages/hardhat/deploy`
-
-📱 Open http://localhost:3000 to see the app

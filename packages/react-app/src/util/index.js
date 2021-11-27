@@ -1,6 +1,8 @@
 import faker from "faker";
 import { DEFAULT_DESCRIPTION, DEFAULT_HOME_ICON } from "../constants";
 
+export const USE_LOCAL = false
+
 export const capitalize = s => {
   if (typeof s !== "string") return "";
   return (s.charAt(0).toUpperCase() + s.slice(1)).replace("-", " ");
