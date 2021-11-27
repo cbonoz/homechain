@@ -7,6 +7,8 @@ import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 //import "@openzeppelin/contracts/access/Ownable.sol"; //https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
 
 contract HomeChainContract is ChainlinkClient {
+  using Chainlink for Chainlink.Request;
+
 
   string title = ""; // Title of contract (property)
   string description = ""; // Description of contract
@@ -30,7 +32,7 @@ contract HomeChainContract is ChainlinkClient {
     string memory _description, 
     uint _limit, 
     uint _percent, 
-    uint _price) {
+    uint _price) public {
       // Set contract properties.
       owner = msg.sender;
       title = _title;
