@@ -2,6 +2,7 @@ import Portis from "@portis/web3";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { Alert, Button, Col, Menu, Row } from "antd";
 import "antd/dist/antd.css";
+import Moralis from "moralis";
 import Authereum from "authereum";
 import {
   useBalance,
@@ -149,6 +150,8 @@ const web3Modal = new Web3Modal({
   },
 });
 
+const USE_MORALIS = true;
+
 function App(props) {
   const mainnetProvider =
     poktMainnetProvider && poktMainnetProvider._isProvider
@@ -167,6 +170,7 @@ function App(props) {
     if (injectedProvider && injectedProvider.provider && typeof injectedProvider.provider.disconnect == "function") {
       await injectedProvider.provider.disconnect();
     }
+    await logoutMoralis();
     if (skipRefresh) {
       return;
     }
@@ -375,6 +379,7 @@ function App(props) {
       currentUser = await Moralis.authenticate({ signingMessage: "Log in using Moralis" });
       setUser(currentUser);
       setAddress(currentUser.get("ethAddress"));
+      setInjectedProvider(await Moralis.enableWeb3());
     }
   };
 
@@ -387,11 +392,19 @@ function App(props) {
   useEffect(() => {
     const serverUrl = MORALIS_SERVER;
     const appId = MORALIS_ID;
-    console.log("moralis start", serverUrl, appId);
     Moralis.start({ serverUrl, appId });
+    let currentUser = Moralis.User.current();
+    console.log("moralis start", serverUrl, appId, user);
+    if (currentUser) {
+      setUser(user);
+    }
   }, []);
 
   const loadWeb3Modal = useCallback(async () => {
+    if (USE_MORALIS) {
+      return await loginMoralis();
+    }
+
     const provider = await web3Modal.connect();
     setInjectedProvider(new ethers.providers.Web3Provider(provider));
 
@@ -412,6 +425,7 @@ function App(props) {
     });
   }, [setInjectedProvider]);
 
+  // Immediate login prompt.
   // useEffect(() => {
   //   if (web3Modal.cachedProvider) {
   //     loadWeb3Modal();
@@ -453,7 +467,7 @@ function App(props) {
     );
   }
 
-  const loggedIn = !!web3Modal.cachedProvider;
+  const loggedIn = !!web3Modal.cachedProvider || user;
   const ROUTES = loggedIn ? ["search", "list-property", "about"] : ["setup"];
 
   useMemo(() => {
@@ -536,6 +550,7 @@ function App(props) {
           userSigner={userSigner}
           mainnetProvider={mainnetProvider}
           price={price}
+          loggedIn={loggedIn}
           web3Modal={web3Modal}
           loadWeb3Modal={loadWeb3Modal}
           logoutOfWeb3Modal={logoutOfWeb3Modal}

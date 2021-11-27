@@ -3,7 +3,6 @@ import { ethers } from "ethers";
 
 export const deployContract = async ({ title, description, limit, percent, eth }) => {
   const contractArgs = [title, description, limit, percent, eth];
-  // TODO: deploy contract
   const contractArtifacts = await ethers.getContractFactory(contractName, {
     libraries: libraries,
   });

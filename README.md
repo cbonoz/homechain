@@ -11,8 +11,9 @@ Find, create, and sell NFT's around your owned real estate.
 HomeChain enables users to create either own NFT's around properties they own:
 
 Users can create the terms of the NFT and allow others to deposit to it.
- Proof of ownership,such as a title or deed, is uploaded on HomeChain. It then collects the user's signature and uploads it as an image file to the IPFS folder for the property.
- After upload, prospective buyers/participants (up to the limit specified by the issuer) can discover previously-created listings and purchase units of ownership using attachment to the NFT metadata source of truth.
+Proof of ownership,such as a title or deed, is uploaded on HomeChain. It then collects the user's signature and uploads it as an image file to the IPFS folder for the property.
+After upload, prospective buyers/participants (up to the limit specified by the issuer) can discover previously-created listings and purchase units of ownership using attachment to the NFT metadata source of truth.
+
 - Property NFTs can either be ownership-oriented or collectible (i.e. collectible commonly in the case of a celebrity or notable location).
 - HomeChain's signature model could be extended to support arbitrary documents where a signature is tied to an esigned document on IPFS in the future.
 
@@ -22,13 +23,14 @@ Each property gets deployed as its own smart contract. With the price/appraised 
 
 ### Requirements
 
-HomeChain has the following environment requirements:
+HomeChain has the following environment variables for interfacing with core blockchain services:
 
 <pre>
     REACT_APP_NFT_PORT_KEY=XXX # your nftport.xyz api key
     REACT_APP_STORAGE_KEY=XXX  # your web3.storage api key
     REACT_APP_MORALIS_ID=XXX # your moralis app id
     REACT_APP_MORALIS_SERVER=XXX # your moralis server id
+    REACT_APP_ALCHEMY_KEY=XXX # your network-specific alchemy key
 </pre>
 
 Sponsors:
@@ -141,6 +143,7 @@ Create a limited partnership (LP), issue a token on whatever blockchain you want
 ### Future work
 
 ### Useful links
-* https://chainlink-fall-hackathon-2021.devpost.com/ --
+
+- https://chainlink-fall-hackathon-2021.devpost.com/ --
 
 ### Dev Notes

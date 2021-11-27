@@ -45,6 +45,7 @@ export default function Account({
   localProvider,
   mainnetProvider,
   price,
+  loggedIn,
   minimized,
   web3Modal,
   loadWeb3Modal,
@@ -52,8 +53,8 @@ export default function Account({
   blockExplorer,
 }) {
   const modalButtons = [];
-  if (web3Modal) {
-    if (web3Modal.cachedProvider) {
+  if (web3Modal || user) {
+    if (loggedIn) {
       modalButtons.push(
         <Button
           key="logoutbutton"

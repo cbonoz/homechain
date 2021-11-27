@@ -26,7 +26,7 @@ const createProperty = () => ({
   title: faker.address.streetAddress(),
   eth: "1.0",
   description: DEFAULT_DESCRIPTION,
-  imgUrl: DEFAULT_HOME_ICON,
+  imgUrl: undefined,
   nftContract: "0xf18eE101d2081478ce68Eab4E6B8f7Cb0fBBed4e",
 });
 

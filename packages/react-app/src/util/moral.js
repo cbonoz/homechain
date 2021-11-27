@@ -2,15 +2,15 @@ import Moralis from "moralis";
 const Property = Moralis.Object.extend("Property");
 
 export const saveProperty = async prop => {
-  const prop = new Property();
   delete prop["id"];
   const keys = Object.keys(prop);
 
+  const obj = new Property();
   keys.forEach(k => {
-    prop.save(k, prop[k]);
+    obj.save(k, prop[k]);
   });
   console.log("save", prop);
-  return await prop.save();
+  return await obj.save();
 };
 
 // https://docs.moralis.io/moralis-server/database/queries
@@ -28,7 +28,8 @@ export const getProperties = async (skip, limit) => {
   const query = new Moralis.Query(Property);
   query.skip(skip);
   query.withCount();
-  const results = await query.find();
-  console.log("properties", results);
-  return results;
+  const { results } = await query.find();
+  const properties = results.map(x => x.attributes);
+  console.log("properties", properties);
+  return properties;
 };

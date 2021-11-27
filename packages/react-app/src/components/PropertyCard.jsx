@@ -4,16 +4,13 @@ import { DEFAULT_HOME_ICON } from "../constants";
 
 const { Meta } = Card;
 
-const PropertyCard = ({
-  title,
-  description,
-  imgUrl = DEFAULT_HOME_ICON,
-  icon = "https://joeschmoe.io/api/v1/random",
-}) => {
+const PropertyCard = ({ title, description, imgUrl, icon = "https://joeschmoe.io/api/v1/random" }) => {
   return (
     <Card
       style={{ width: 200, cursor: "pointer", margin: 20 }}
-      cover={<img alt="example" src={imgUrl} style={{ width: 200, height: 200, margin: "0 auto" }} />}
+      cover={
+        <img alt="example" src={imgUrl || DEFAULT_HOME_ICON} style={{ width: 200, height: 200, margin: "0 auto" }} />
+      }
       actions={[
         <SettingOutlined key="setting" />,
         <DollarOutlined key="purchase" />,

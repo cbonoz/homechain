@@ -23,7 +23,7 @@ const LAST_STEP = 3;
 
 const testAddress = createFullAddress();
 
-const UPLOAD_FILES = true;
+const UPLOAD_FILES = false;
 
 function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) {
   const [currentStep, setCurrentStep] = useState(0);
@@ -74,7 +74,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
   const updateStep = async offset => {
     const newStep = currentStep + offset;
     if (newStep === LAST_STEP) {
-      if (!files || files.length === 0) {
+      if (UPLOAD_FILES && (!files || files.length === 0)) {
         alert("At least one file must be added");
         return;
       }
@@ -86,71 +86,72 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
 
       setLoading(true);
 
-      try {
-        const { data: nftData } = await createNftFromFileData(
-          info.title,
-          info.description,
-          files[0],
-          address,
-          "rinkeby",
-        );
+      let d = { ...info };
 
-        let d = {
-          ...info,
+      if (UPLOAD_FILES) {
+        try {
+          const { data: nftData } = await createNftFromFileData(
+            info.title,
+            info.description,
+            files[0],
+            address,
+            "rinkeby",
+          );
+        } catch (e) {
+          console.error("error creating listing", e);
+          alert("Error creating listing: " + e.toString());
+          return;
+        }
+
+        d = {
+          ...d,
           nftUrl: nftData.transaction_external_url,
           nftContract: nftData.contract_address,
         };
 
-        if (UPLOAD_FILES) {
-          try {
-            await initCeramic(address);
-          } catch (e) {
-            console.error(e);
-          }
-
-          const streamId = await createStream(d);
-
-          const sigData = sigRef.current.getTrimmedCanvas().toDataURL("image/png");
-          const uploadFiles = makeListingFiles(files, sigData, { streamId });
-          const cid = await storeFiles(uploadFiles);
-
-          d = {
-            ...d,
-            cid,
-            streamId,
-            ipfsUrl: ipfsUrl(cid),
-            imgUrl: info.imgUrl || DEFAULT_HOME_ICON,
-            createdAt: new Date(),
-          };
-
-          addCard(d); // TODO: add persistence (ex: moralis).
-          try {
-            if (!d.collectibleOnly) {
-              // Deploy as interactable smart contract.
-              try {
-                await deployContract(d);
-              } catch (e) {
-                console.error("error deploying contract", e);
-              }
-            }
-            // Save property after contract deploy (if applicable).
-            await saveProperty(d);
-          } catch (e) {
-            console.error("error saving property", e);
-          } finally {
-            setLoading(false);
-          }
+        try {
+          await initCeramic(address);
+        } catch (e) {
+          console.error(e);
         }
 
-        setResult(d);
+        const streamId = await createStream(d);
+
+        const sigData = sigRef.current.getTrimmedCanvas().toDataURL("image/png");
+        const uploadFiles = makeListingFiles(files, sigData, { streamId });
+        const cid = await storeFiles(uploadFiles);
+
+        d = {
+          ...d,
+          cid,
+          streamId,
+          ipfsUrl: ipfsUrl(cid),
+          imgUrl: info.imgUrl || DEFAULT_HOME_ICON,
+          createdAt: new Date(),
+        };
+      }
+
+      try {
+        if (!d.collectibleOnly) {
+          // Deploy as interactable smart contract.
+          try {
+            const contract = await deployContract(d);
+          } catch (e) {
+            console.error("error deploying contract", e);
+          }
+        }
+        // Save property after contract deploy (if applicable).
+        await saveProperty(d);
+        d["contract"] = contract;
       } catch (e) {
-        console.error("error creating listing", e);
-        alert("Error creating listing: " + e.toString());
+        console.error("error saving property", e);
         return;
       } finally {
         setLoading(false);
       }
 
+      addCard(d); // TODO: add persistence (ex: moralis).
+      setResult(d);
       setShowModal(false);
     }
 

@@ -30,7 +30,7 @@ function Discover({ setProperty, history }) {
 
   return (
     <div>
-      {properties?.map((p, i) => {
+      {(properties || []).map((p, i) => {
         return (
           <span
             key={i}

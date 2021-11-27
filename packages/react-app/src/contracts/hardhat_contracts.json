@@ -39,6 +39,76 @@
               "type": "constructor"
             },
             {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "bytes32",
+                  "name": "id",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "ChainlinkCancelled",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "bytes32",
+                  "name": "id",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "ChainlinkFulfilled",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "bytes32",
+                  "name": "id",
+                  "type": "bytes32"
+                }
+              ],
+              "name": "ChainlinkRequested",
+              "type": "event"
+            },
+            {
+              "inputs": [],
+              "name": "estimate",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "_requestId",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_estimate",
+                  "type": "uint256"
+                }
+              ],
+              "name": "fulfill",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
               "inputs": [
                 {
                   "internalType": "address",
@@ -62,6 +132,19 @@
               "name": "purchaseStake",
               "outputs": [],
               "stateMutability": "payable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "requestEstimateData",
+              "outputs": [
+                {
+                  "internalType": "bytes32",
+                  "name": "requestId",
+                  "type": "bytes32"
+                }
+              ],
+              "stateMutability": "nonpayable",
               "type": "function"
             }
           ]
