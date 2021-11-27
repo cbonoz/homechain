@@ -368,27 +368,28 @@ function App(props) {
       </div>
     );
   }
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
   const loginMoralis = async () => {
     let currentUser = Moralis.User.current();
     if (!currentUser) {
-      currentUser = await Moralis.authenticate({ signingMessage: "Log in using Moralis" })
-      setUser(currentUser)
-      setAddress(currentUser.get('ethAddress'))
-  }
+      currentUser = await Moralis.authenticate({ signingMessage: "Log in using Moralis" });
+      setUser(currentUser);
+      setAddress(currentUser.get("ethAddress"));
+    }
+  };
 
   const logoutMoralis = async () => {
-    await Moralis.User.logOut()
-    setUser(undefined)
-    setAddress(undefined)
-  }
+    await Moralis.User.logOut();
+    setUser(undefined);
+    setAddress(undefined);
+  };
 
   useEffect(() => {
-    const serverUrl = MORALIS_SERVER
-    const appId = MORALIS_ID
-    console.log('moralis start', serverUrl, appId)
+    const serverUrl = MORALIS_SERVER;
+    const appId = MORALIS_ID;
+    console.log("moralis start", serverUrl, appId);
     Moralis.start({ serverUrl, appId });
-  }, [])
+  }, []);
 
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();
