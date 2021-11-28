@@ -265,7 +265,7 @@ function ListProperty({ isLoggedIn, signer, provider, address, blockExplorer }) 
 
   return (
     <div className="content">
-      <h1>Create your real estate NFT</h1>
+      <h1>Create real estate NFT listing</h1>
       <Header>
         <Steps current={currentStep}>
           <Step title="Login" description="Authenticate." />

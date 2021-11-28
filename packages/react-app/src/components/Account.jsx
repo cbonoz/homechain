@@ -88,10 +88,14 @@ export default function Account({
     ""
   ) : (
     <span>
-      {address ? (
-        <Address address={address} ensProvider={mainnetProvider} blockExplorer={blockExplorer} />
-      ) : (
-        "Connecting..."
+      {loggedIn && (
+        <span>
+          {address ? (
+            <Address address={address} ensProvider={mainnetProvider} blockExplorer={blockExplorer} />
+          ) : (
+            "Connecting..."
+          )}
+        </span>
       )}
       <Balance address={address} provider={localProvider} price={price} />
       <Wallet

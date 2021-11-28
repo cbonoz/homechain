@@ -34,11 +34,11 @@ HomeChain has the following environment variables for interfacing with core bloc
 </pre>
 
 Sponsors:
-Chainlink: Each property
+Chainlink: Each listed property is deployed as it's own distinct smart contract. The smart contract maintains the owner and listing terms, as well as all the payers.
 Ceramic: Distributed mutable data storage for the marketplace metadata. Search support.
 IPFS / Filecoin: Store associated files, signature, and proof of ownership (ex: deed/title).
 NFTPort: NFT issuance for the issued real estate backed NFT (minting).
-Unlock protocol: NFT purchase / paywall. Once an NFT is uploaded, unlock protocol regulates access via required payment.
+Alchemy
 
 ### Running the app
 
